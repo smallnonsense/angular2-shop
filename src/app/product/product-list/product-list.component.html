@@ -1,0 +1,16 @@
+<h1>{{title}}</h1>
+<div *ngIf="(products | async).length !== 0">
+  <table>
+    <tr *ngFor="let p of products | async">
+      <td>{{p.name}}</td>
+      <td>{{p.description}}</td>
+      <td>{{p.price}}</td>
+      <td>{{p.category}}</td>
+      <td><input type="checkbox" [checked]="p.isAvailable" disabled /></td>
+      <td><input type="button" (click)="buy(p)" value="Buy" /></td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="(products | async).length === 0">
+  <p>No products are available</p>
+</div>
