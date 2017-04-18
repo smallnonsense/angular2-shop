@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { BasketItem } from '../../shared/basket-item';
@@ -11,13 +11,13 @@ import { BasketService } from '../../shared/basket.service';
 })
 export class CartListComponent implements OnInit {
 
-  public title = 'Cart';
-  public items: Observable<BasketItem[]>;
+  @Input() public title = 'Cart';
+  @Input() public items: Observable<BasketItem[]>;
 
   constructor(private basketService: BasketService) { }
 
   ngOnInit() {
-    this.items = this.basketService.getBasketItems();
+    // this.items = this.basketService.getBasketItems();
   }
 
   drop(item: BasketItem) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Product } from '../product';
@@ -13,15 +13,15 @@ import { BasketService } from '../../shared/basket.service';
 })
 export class ProductListComponent implements OnInit {
 
-  public title = 'Cart';
-  public products: Observable<Product[]>;
+  @Input() public title = 'Products available';
+  @Input() public products: Observable<Product[]>;
 
   constructor(
     private productService: ProductService,
     private basketService: BasketService) { }
 
   ngOnInit() {
-    this.products = this.productService.getAllProducts();
+    // this.products = this.productService.getAllProducts();
   }
 
   buy(product: Product) {

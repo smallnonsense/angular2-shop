@@ -4,7 +4,7 @@ import { Product } from '../product/product';
 import { BasketItem } from './basket-item';
 
 @Pipe({
-  name: 'productCart'
+  name: 'toCart'
 })
 export class ProductCartPipe implements PipeTransform {
 
