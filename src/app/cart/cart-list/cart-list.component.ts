@@ -1,4 +1,7 @@
-import { Component, OnInit, OnDestroy, OnChanges, DoCheck, Input, SimpleChanges } from '@angular/core';
+import {
+  Component, Input, SimpleChanges, HostBinding, HostListener,
+  OnInit, OnDestroy, OnChanges, DoCheck
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { BasketItem } from 'app/shared/basket-item';
@@ -11,7 +14,6 @@ import { BasketService } from 'app/shared/basket.service';
 })
 export class CartListComponent
   implements OnChanges, OnInit, DoCheck, OnDestroy {
-
 
   @Input() public title = 'Cart';
   @Input() public items: Observable<BasketItem[]>;

@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 <table #cartTable>
-  <tr *ngFor="let item of items | async">
+  <tr *ngFor="let item of items | async" appHover>
     <td>{{item.name}}</td>
     <td>{{item.quantity}}</td>
     <td>{{item.totalPrice}}</td>

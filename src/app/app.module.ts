@@ -3,16 +3,18 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { CartModule } from './cart/cart.module';
-import { ProductModule } from './product/product.module';
+import { CartModule } from 'app/cart/cart.module';
+import { ProductModule } from 'app/product/product.module';
 
-import { AppComponent } from './app.component';
-import { ProductCartPipe } from './shared/product-cart.pipe';
+import { AppComponent } from 'app/app.component';
+import { ProductCartPipe } from 'app/shared/product-cart.pipe';
+import { HoverDirective } from 'app/shared/hover.directive';
 
 @NgModule({
   bootstrap: [AppComponent],
-  declarations: [AppComponent, ProductCartPipe],
+  declarations: [AppComponent, ProductCartPipe, HoverDirective],
   imports: [BrowserModule, FormsModule, HttpModule, CartModule, ProductModule],
-  providers: []
+  providers: [],
+  exports: [HoverDirective]
 })
 export class AppModule { }

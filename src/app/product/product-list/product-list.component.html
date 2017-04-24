@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 <table #productTable>
-  <tr *ngFor="let p of products | async">
+  <tr *ngFor="let p of products | async" appHover>
     <td>{{p.name}}</td>
     <td>{{p.description}}</td>
     <td>{{p.price}}</td>
