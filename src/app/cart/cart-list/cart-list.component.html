@@ -1,14 +1,12 @@
 <h1>{{title}}</h1>
-<div *ngIf="(items | async).length !== 0">
-  <table>
-    <tr *ngFor="let item of items | async">
-      <td>{{item.name}}</td>
-      <td>{{item.quantity}}</td>
-      <td>{{item.totalPrice}}</td>
-      <td><input type="button" (click)="drop(item)" value="Remove" /></td>
-    </tr>
-  </table>
-</div>
-<div *ngIf="(items | async).length === 0">
+<table #cartTable>
+  <tr *ngFor="let item of items | async">
+    <td>{{item.name}}</td>
+    <td>{{item.quantity}}</td>
+    <td>{{item.totalPrice}}</td>
+    <td><input type="button" (click)="drop(item)" value="Remove" /></td>
+  </tr>
+</table>
+<div *ngIf="cartTable.rows.length === 0">
   <p>No items are available in your cart</p>
 </div>

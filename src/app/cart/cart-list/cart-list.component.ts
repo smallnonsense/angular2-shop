@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, DoCheck, Input, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { BasketItem } from 'app/shared/basket-item';
@@ -9,15 +9,28 @@ import { BasketService } from 'app/shared/basket.service';
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.css']
 })
-export class CartListComponent implements OnInit {
+export class CartListComponent
+  implements OnChanges, OnInit, DoCheck, OnDestroy {
+
 
   @Input() public title = 'Cart';
   @Input() public items: Observable<BasketItem[]>;
 
-  constructor(private basketService: BasketService) { }
+  constructor(private basketService: BasketService) {
+    console.log('CartListComponent ctor');
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  }
   ngOnInit() {
-    // this.items = this.basketService.getBasketItems();
+    console.log('CartListComponent.OnInit: Object setup');
+  }
+  ngDoCheck(): void {
+    console.log('CartListComponent.DoCheck: Something has changed');
+  }
+  ngOnDestroy(): void {
+    console.log('CartListComponent.DoDestroy: Object cleanup');
   }
 
   drop(item: BasketItem) {
