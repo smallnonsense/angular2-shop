@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, OnChanges, DoCheck, Input, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Product } from '../product';
-import { ProductService } from '../product.service';
-import { BasketItem } from '../../shared/basket-item';
-import { BasketService } from '../../shared/basket.service';
+import { Product } from 'app/product/product';
+import { ProductService } from 'app/product/product.service';
+
+import { BasketItem } from 'app/common/basket-item';
+import { BasketService } from 'app/common/basket.service';
 
 @Component({
   selector: 'app-product-list',

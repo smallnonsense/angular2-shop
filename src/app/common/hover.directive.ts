@@ -13,8 +13,7 @@ export class HoverDirective {
 
   @HostListener('mouseenter') onEnter() {
     this.originalColor = this.color;
-    this.color = 'red';
-    this.el.nativeElement.style.backgroundColor = this.color;
+    this.color = 'lightgrey';
     console.log('HoverDirective.old:' + this.originalColor);
     console.log('HoverDirective.new:' + this.color);
   }
@@ -24,7 +23,7 @@ export class HoverDirective {
     console.log('HoverDirective.back:' + this.color);
   }
 
-  constructor(private el: ElementRef) {
+  constructor() {
     console.log('HoverDirective.originalColor:' + this.originalColor);
     console.log('HoverDirective.color:' + this.color);
   }

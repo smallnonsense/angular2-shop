@@ -4,8 +4,8 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { BasketItem } from 'app/shared/basket-item';
-import { BasketService } from 'app/shared/basket.service';
+import { BasketItem } from 'app/common/basket-item';
+import { BasketService } from 'app/common/basket.service';
 
 @Component({
   selector: 'app-cart-list',

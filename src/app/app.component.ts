@@ -9,8 +9,8 @@ import { CartListComponent } from 'app/cart/cart-list/cart-list.component';
 
 import { ProductService } from 'app/product/product.service';
 import { Product } from 'app/product/product';
-import { BasketService } from 'app/shared/basket.service';
-import { BasketItem } from 'app/shared/basket-item';
+import { BasketService } from 'app/common/basket.service';
+import { BasketItem } from 'app/common/basket-item';
 
 
 @Component({

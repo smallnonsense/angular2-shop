@@ -7,14 +7,12 @@ import { CartModule } from 'app/cart/cart.module';
 import { ProductModule } from 'app/product/product.module';
 
 import { AppComponent } from 'app/app.component';
-import { ProductCartPipe } from 'app/shared/product-cart.pipe';
-import { HoverDirective } from 'app/shared/hover.directive';
 
 @NgModule({
   bootstrap: [AppComponent],
-  declarations: [AppComponent, ProductCartPipe, HoverDirective],
+  declarations: [AppComponent],
   imports: [BrowserModule, FormsModule, HttpModule, CartModule, ProductModule],
   providers: [],
-  exports: [HoverDirective]
+  exports: []
 })
 export class AppModule { }

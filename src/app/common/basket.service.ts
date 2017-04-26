@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { BasketItem } from '../shared/basket-item';
+import { BasketItem } from '../common/basket-item';
 
 @Injectable()
 export class BasketService {
