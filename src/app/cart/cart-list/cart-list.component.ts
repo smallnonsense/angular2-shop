@@ -1,11 +1,12 @@
 import {
-  Component, Input, SimpleChanges, HostBinding, HostListener,
-  OnInit, OnDestroy, OnChanges, DoCheck
+  Component, Input, Output, HostBinding, HostListener,
+  OnInit, OnDestroy, OnChanges, DoCheck, SimpleChanges,
+  EventEmitter
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { BasketItem } from 'app/common/basket-item';
-import { BasketService } from 'app/common/basket.service';
+import { BasketItem } from 'app/cart/basket-item';
+import { BasketService } from 'app/cart/basket.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -17,6 +18,7 @@ export class CartListComponent
 
   @Input() public title = 'Cart';
   @Input() public items: Observable<BasketItem[]>;
+  @Output() public remove = new EventEmitter<BasketItem>();
 
   constructor(private basketService: BasketService) {
     console.log('CartListComponent ctor');
@@ -34,8 +36,7 @@ export class CartListComponent
   ngOnDestroy(): void {
     console.log('CartListComponent.DoDestroy: Object cleanup');
   }
-
-  drop(item: BasketItem) {
-    this.basketService.removeItem(item);
+  onRemove(item: BasketItem) {
+    this.remove.emit(item);
   }
 }

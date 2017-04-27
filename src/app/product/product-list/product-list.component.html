@@ -6,7 +6,7 @@
     <td>{{p.price}}</td>
     <td>{{p.category}}</td>
     <td><input type="checkbox" [checked]="p.isAvailable" disabled /></td>
-    <td><input type="button" (click)="buy(p)" value="Buy" /></td>
+    <td><input type="button" (click)="onBuy(p)" value="Buy" /></td>
   </tr>
 </table>
 <div *ngIf="productTable.rows.length === 0">

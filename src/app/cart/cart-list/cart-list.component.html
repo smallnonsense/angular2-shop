@@ -4,7 +4,7 @@
     <td>{{item.name}}</td>
     <td>{{item.quantity}}</td>
     <td>{{item.totalPrice}}</td>
-    <td><input type="button" (click)="drop(item)" value="Remove" /></td>
+    <td><input type="button" (click)="onRemove(item)" value="Remove" /></td>
   </tr>
 </table>
 <div *ngIf="cartTable.rows.length === 0">

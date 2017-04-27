@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Product } from '../product/product';
-import { BasketItem } from './basket-item';
+import { Product } from 'app/product/product';
+import { BasketItem } from 'app/cart/basket-item';
 
 @Pipe({
   name: 'toCart'

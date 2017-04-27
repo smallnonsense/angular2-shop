@@ -1,3 +1,3 @@
 <h1>{{title}}</h1>
-<app-product-list [title]="'Products available'"></app-product-list>
-<app-cart-list [title]="'Card'"></app-cart-list>
+<app-product-list [title]="'Products available'" [products]="products" (buy)="onBuy($event)"></app-product-list>
+<app-cart-list [title]="'Card'" [items]="basketItems" (remove)="onRefuse($event)"></app-cart-list>

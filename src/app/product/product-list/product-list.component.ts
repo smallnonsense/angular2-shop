@@ -1,11 +1,15 @@
-import { Component, OnInit, OnDestroy, OnChanges, DoCheck, Input, SimpleChanges } from '@angular/core';
+import {
+  Component, Input, Output,
+  OnInit, OnDestroy, OnChanges, DoCheck, SimpleChanges,
+  EventEmitter
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Product } from 'app/product/product';
 import { ProductService } from 'app/product/product.service';
 
-import { BasketItem } from 'app/common/basket-item';
-import { BasketService } from 'app/common/basket.service';
+import { BasketItem } from 'app/cart/basket-item';
+import { BasketService } from 'app/cart/basket.service';
 
 @Component({
   selector: 'app-product-list',
@@ -17,10 +21,9 @@ export class ProductListComponent
 
   @Input() public title = 'Products available';
   @Input() public products: Observable<Product[]>;
+  @Output() public buy = new EventEmitter<Product>();
 
-  constructor(
-    private productService: ProductService,
-    private basketService: BasketService) {
+  constructor() {
     console.log('ProductListComponent ctor');
   }
 
@@ -37,8 +40,7 @@ export class ProductListComponent
     console.log('ProductListComponent.DoDestroy: Object cleanup');
   }
 
-  buy(product: Product) {
-    const item = new BasketItem(product.name, 1, product.price);
-    this.basketService.addItem(item);
+  onBuy(product: Product) {
+    this.buy.emit(product);
   }
 }
