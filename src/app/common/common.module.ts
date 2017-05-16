@@ -5,12 +5,16 @@ import { ProductCartPipe } from './product-cart.pipe';
 import { HoverDirective } from './hover.directive';
 import { StorageService } from './storage.service';
 import { InfoService } from './info.service';
-import { KeyGenService } from './key-gen.service';
+import { KeyGenService, KeygenLength } from './key-gen.service';
+import { HighlightClickDirective } from './highlight-click.directive';
 
 @NgModule({
-  declarations: [HoverDirective, ProductCartPipe],
+  declarations: [HoverDirective, HighlightClickDirective, ProductCartPipe],
   imports: [CModule],
-  providers: [StorageService, InfoService, KeyGenService],
-  exports: [HoverDirective, ProductCartPipe]
+  providers: [
+    StorageService, InfoService, KeyGenService
+    , { provide: KeygenLength, useValue: 5 }
+  ],
+  exports: [HoverDirective, HighlightClickDirective, ProductCartPipe]
 })
 export class CommonModule { }

@@ -1,5 +1,5 @@
 export enum ProductCategory {
-	Food = 1,
-	Closes,
-	Service
+  Food = 1,
+  Closes,
+  Service
 }

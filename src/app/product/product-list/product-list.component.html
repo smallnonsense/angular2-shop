@@ -1,12 +1,12 @@
 <h1>{{title}}</h1>
 <table #productTable>
-  <tr *ngFor="let p of products | async" appHover>
+  <tr *ngFor="let p of products | async" appHover [appHighlightClick]="'red'">
     <td>{{p.name}}</td>
     <td>{{p.description}}</td>
     <td>{{p.price}}</td>
     <td>{{p.category}}</td>
-    <td><input type="checkbox" [checked]="p.isAvailable" disabled /></td>
-    <td><input type="button" (click)="onBuy(p)" value="Buy" /></td>
+    <td [appHighlightClick]="'yellow'"><input type="checkbox" [checked]="p.isAvailable" disabled /></td>
+    <td [appHighlightClick]="'yellow'"><input type="button" (click)="onBuy(p)" value="Buy" /></td>
   </tr>
 </table>
 <div *ngIf="productTable.rows.length === 0">

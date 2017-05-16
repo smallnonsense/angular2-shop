@@ -9,22 +9,20 @@ import {
 export class HoverDirective {
 
   private originalColor: string;
-  @HostBinding('style.backgroundColor') color;
+  @HostBinding('style.backgroundColor')
+  private color : string;
 
-  @HostListener('mouseenter') onEnter() {
+  @HostListener('mouseenter')
+  private onEnter() {
     this.originalColor = this.color;
     this.color = 'lightgrey';
     console.log('HoverDirective.old:' + this.originalColor);
     console.log('HoverDirective.new:' + this.color);
   }
 
-  @HostListener('mouseleave') onLeave() {
+  @HostListener('mouseleave')
+  private onLeave() {
     this.color = this.originalColor;
     console.log('HoverDirective.back:' + this.color);
-  }
-
-  constructor() {
-    console.log('HoverDirective.originalColor:' + this.originalColor);
-    console.log('HoverDirective.color:' + this.color);
   }
 }
