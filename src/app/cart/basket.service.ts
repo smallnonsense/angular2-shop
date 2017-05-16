@@ -11,7 +11,7 @@ export class BasketService {
 
   private baskets: BehaviorSubject<BasketItem[]> = new BehaviorSubject([]);
 
-  constructor(private storage: StorageService) {
+  public constructor(private storage: StorageService) {
     const data = storage.getItem('baskets');
     if (data) {
       this.baskets.next((JSON.parse(data) as Array<any>)
@@ -22,11 +22,11 @@ export class BasketService {
     }
   }
 
-  getBasketItems(): Observable<BasketItem[]> {
+  public getBasketItems(): Observable<BasketItem[]> {
     return this.baskets.asObservable();
   }
 
-  addItem(newItem: BasketItem) {
+  public addItem(newItem: BasketItem) {
     const items = this.baskets.getValue();
     const olditem = items.filter(i => i.name === newItem.name)[0];
     if (olditem) {
@@ -41,7 +41,7 @@ export class BasketService {
     this.storage.setItem('baskets', data);
   }
 
-  removeItem(item: BasketItem) {
+  public removeItem(item: BasketItem) {
     const updatedBasket = this.baskets.getValue()
       .filter(i => i !== item)
       .filter(i => i.name !== item.name);

@@ -5,10 +5,9 @@ export const KeygenLength = new OpaqueToken('KeygenLength');
 @Injectable()
 export class KeyGenService {
 
-  constructor(
+  public constructor(
     @Optional() @Inject(KeygenLength)
-    private keyLength: number = 10
-    ) { }
+    private keyLength: number = 10) { }
 
   public gen(): string {
     return Math.random().toString(36).substring(this.keyLength);

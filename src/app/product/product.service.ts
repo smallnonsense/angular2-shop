@@ -12,7 +12,7 @@ export class ProductService {
 
   private products: BehaviorSubject<Product[]> = new BehaviorSubject([]);
 
-  constructor(private storage: StorageService) {
+  public constructor(private storage: StorageService) {
     const data = storage.getItem('products');
     if (!data) {
       this.products.next([
@@ -32,7 +32,7 @@ export class ProductService {
     }
   }
 
-  getAllProducts(): Observable<Product[]> {
+  public getAllProducts(): Observable<Product[]> {
     return this.products.asObservable();
   }
 }

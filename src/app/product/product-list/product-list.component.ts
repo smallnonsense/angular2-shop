@@ -19,28 +19,31 @@ import { BasketService } from 'app/cart/basket.service';
 export class ProductListComponent
   implements OnChanges, OnInit, DoCheck, OnDestroy {
 
-  @Input() public title = 'Products available';
-  @Input() public products: Observable<Product[]>;
-  @Output() public buy = new EventEmitter<Product>();
+  @Input()
+  public title = 'Products available';
+  @Input()
+  public products: Observable<Product[]> = null;
+  @Output()
+  public buy = new EventEmitter<Product>();
 
-  constructor() {
-    console.log('ProductListComponent ctor');
+  public constructor() {
+    // console.log('ProductListComponent ctor');
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
   }
-  ngOnInit() {
-    console.log('ProductListComponent.OnInit: Object setup');
+  public ngOnInit() {
+    // console.log('ProductListComponent.OnInit: Object setup');
   }
-  ngDoCheck(): void {
-    console.log('ProductListComponent.DoCheck: Something has changed');
+  public ngDoCheck(): void {
+    // console.log('ProductListComponent.DoCheck: Something has changed');
   }
-  ngOnDestroy(): void {
-    console.log('ProductListComponent.DoDestroy: Object cleanup');
+  public ngOnDestroy(): void {
+    // console.log('ProductListComponent.DoDestroy: Object cleanup');
   }
 
-  onBuy(product: Product) {
+  public onBuy(product: Product) {
     this.buy.emit(product);
   }
 }

@@ -8,16 +8,16 @@ export class HighlightClickDirective {
   private originalWeight: string = null;
   private originalColor: string = null;
 
-  @Input('appHighlightClick')
-  private definedColor: string;
+  @Input()
+  public appHighlightClick: string;
 
   @HostBinding('style.font-weight')
-  private weight: string;
+  public weight: string;
   @HostBinding('style.color')
-  private color: string;
+  public color: string;
 
   @HostListener('click')
-  private onClick() {
+  public onClick() {
     if (this.originalWeight === null) {
       this.originalWeight = this.weight;
       this.weight = 'bold';
@@ -27,15 +27,15 @@ export class HighlightClickDirective {
     }
     if (this.originalColor === null) {
       this.originalColor = this.color;
-      this.color = this.definedColor;
+      this.color = this.appHighlightClick;
     } else {
       this.color = this.originalColor;
       this.originalColor = null;
     }
-    console.log('HighlightClickDirective.weight.old:' + this.originalWeight);
-    console.log('HighlightClickDirective.weight.new:' + this.weight);
-    console.log('HighlightClickDirective.color.defined:' + this.definedColor);
-    console.log('HighlightClickDirective.color.old:' + this.originalColor);
-    console.log('HighlightClickDirective.color.new:' + this.color);
+    // console.log('HighlightClickDirective.weight.old:' + this.originalWeight);
+    // console.log('HighlightClickDirective.weight.new:' + this.weight);
+    // console.log('HighlightClickDirective.color.defined:' + this.appHighlightClick);
+    // console.log('HighlightClickDirective.color.old:' + this.originalColor);
+    // console.log('HighlightClickDirective.color.new:' + this.color);
   }
 }
