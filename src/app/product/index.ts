@@ -1,5 +1,5 @@
-import { ProductModule } from 'app/product/product.module';
-import { ProductCategoryEnum } from 'app/product/product-category.enum';
-import { ProductService } from 'app/product/product.service';
-import { Product } from 'app/product/product';
-import { ProductListComponent } from 'app/product/product-list/product-list.component';
+export * from './product.module';
+export * from './product-category.enum';
+export * from './product.service';
+export * from './product';
+export * from './product-list/product-list.component';

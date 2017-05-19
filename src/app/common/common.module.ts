@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as CModule } from '@angular/common';
 
-import { ProductCartPipe } from './product-cart.pipe';
-import { HoverDirective } from './hover.directive';
-import { StorageService } from './storage.service';
-import { InfoService } from './info.service';
-import { KeyGenService, KeygenLength } from './key-gen.service';
-import { HighlightClickDirective } from './highlight-click.directive';
+import {
+  ProductCartPipe, HoverDirective, HighlightClickDirective,
+  StorageService, InfoService, KeyGenService, KeygenLength
+} from './';
 
 @NgModule({
   declarations: [HoverDirective, HighlightClickDirective, ProductCartPipe],
   imports: [CModule],
   providers: [
-    StorageService, InfoService, KeyGenService
-    , { provide: KeygenLength, useValue: 5 }
+    StorageService, InfoService, KeyGenService,
+    { provide: KeygenLength, useValue: 5 }
   ],
   exports: [HoverDirective, HighlightClickDirective, ProductCartPipe]
 })
