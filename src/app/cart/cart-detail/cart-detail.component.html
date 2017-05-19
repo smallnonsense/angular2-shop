@@ -1,0 +1,7 @@
+<h1>{{title}}</h1>
+<div *ngIf="(items | async).length !== 0">
+  <p><bold>{{(items | async).length}} items in your basket</bold></p>
+</div>
+<div *ngIf="(items | async).length === 0">
+  <p>Empty basket</p>
+</div>

@@ -3,10 +3,10 @@ import { CommonModule as CModule } from '@angular/common';
 
 import { CommonModule } from 'app/common/common.module';
 
-import { CartListComponent } from './cart-list/cart-list.component';
+import { CartListComponent, CartDetailComponent } from './';
 
 @NgModule({
-  declarations: [CartListComponent],
+  declarations: [CartListComponent, CartDetailComponent],
   exports: [CartListComponent],
   imports: [CModule, CommonModule],
 })
