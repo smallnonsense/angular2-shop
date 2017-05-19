@@ -6,7 +6,6 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 import { BasketItem } from 'app/cart/basket-item';
-import { BasketService } from 'app/cart/basket.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -23,7 +22,7 @@ export class CartListComponent
   @Output()
   public remove = new EventEmitter<BasketItem>();
 
-  public constructor(private basketService: BasketService) {
+  public constructor() {
     // console.log('CartListComponent ctor');
   }
 
