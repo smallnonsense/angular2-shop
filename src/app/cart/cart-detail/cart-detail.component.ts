@@ -1,4 +1,7 @@
 import { Component, Input, Output, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+import { BasketItem } from 'app/cart/basket-item';
 
 @Component({
   selector: 'app-cart-detail',

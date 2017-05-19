@@ -21,12 +21,11 @@ const routes: Routes = [
   bootstrap: [AppComponent],
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
-    // RouterModule.forRoot(routes),
-     FormsModule, HttpModule,
+    BrowserModule, FormsModule, HttpModule,
+    RouterModule.forRoot(routes),
     CartModule, ProductModule, CommonModule
   ],
-  // providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
-  // exports: [RouterModule]
+  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+  exports: [RouterModule]
 })
 export class AppModule { }
