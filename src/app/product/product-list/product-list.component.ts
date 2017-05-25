@@ -1,8 +1,4 @@
-import {
-  Component, Input, Output,
-  OnInit, OnDestroy, OnChanges, DoCheck, SimpleChanges,
-  EventEmitter
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Product } from 'app/product/product';
@@ -16,34 +12,23 @@ import { BasketService } from 'app/cart/basket.service';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent
-  implements OnChanges, OnInit, DoCheck, OnDestroy {
+export class ProductListComponent implements OnInit {
 
   @Input()
   public title = 'Products available';
-  @Input()
-  public products: Observable<Product[]> = null;
-  @Output()
-  public buy = new EventEmitter<Product>();
 
-  public constructor() {
-    // console.log('ProductListComponent ctor');
-  }
+  public products: Observable<Product[]>;
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
+  public constructor(
+    private productService: ProductService,
+    private basketService: BasketService) { }
+
   public ngOnInit() {
-    // console.log('ProductListComponent.OnInit: Object setup');
-  }
-  public ngDoCheck(): void {
-    // console.log('ProductListComponent.DoCheck: Something has changed');
-  }
-  public ngOnDestroy(): void {
-    // console.log('ProductListComponent.DoDestroy: Object cleanup');
+    this.products = this.productService.getAllProducts();
   }
 
   public onBuy(product: Product) {
-    this.buy.emit(product);
+    const item = new BasketItem(product.name, 1, product.price);
+    this.basketService.addItem(item);
   }
 }

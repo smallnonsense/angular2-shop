@@ -31,7 +31,8 @@ export class BasketService {
     const olditem = items.filter(i => i.name === newItem.name)[0];
     if (olditem) {
       olditem.quantity = olditem.quantity + newItem.quantity;
-      olditem.totalPrice = olditem.quantity * newItem.totalPrice;
+      olditem.totalPrice = this.round(olditem.quantity * newItem.totalPrice);
+      this.baskets.next(items);
     } else {
       const newItems = items.concat([newItem]);
       this.baskets.next(newItems);
@@ -49,5 +50,9 @@ export class BasketService {
 
     const data = JSON.stringify(updatedBasket);
     this.storage.setItem('baskets', data);
+  }
+
+  private round(value: number): number {
+    return Math.round(value * 100) / 100;
   }
 }

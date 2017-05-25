@@ -1,3 +1,24 @@
-<h1>{{title}}</h1>
-<app-product-list [title]="'Products available'" [products]="products" (buy)="onBuy($event)"></app-product-list>
-<app-cart-detail [title]="'Card'" [items]="basketItems"></app-cart-list>
+<div>
+  <nav class="navbar navbar-default">
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="navbar-header">
+          <a class="navbar-brand" routerLink="/">Home</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/products">Products</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/cart">Cart</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="container-fluid offset1 span8 pull-right">
+  <app-cart-detail class="row-fluid"></app-cart-detail>
+</div>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

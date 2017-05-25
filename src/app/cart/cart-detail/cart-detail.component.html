@@ -1,7 +1,8 @@
-<h1>{{title}}</h1>
-<div *ngIf="(items | async).length !== 0">
-  <p><bold>{{(items | async).length}} items in your basket</bold></p>
-</div>
-<div *ngIf="(items | async).length === 0">
-  <p>Empty basket</p>
+<div>
+  <div *ngIf="(itemsCount | async) !== 0">
+    <p>Cart contains <b>{{itemsCount | async}}</b> item(s) for <b>${{totalAmount | async}}</b></p>
+  </div>
+  <div *ngIf="(itemsCount | async) === 0">
+    <p>Cart is empty</p>
+  </div>
 </div>
