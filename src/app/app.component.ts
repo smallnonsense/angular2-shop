@@ -23,6 +23,8 @@ export class AppComponent
     if (this.infoService) {
       const info = this.infoService.get();
       this.titleService.setTitle(`${info.app} v${info.ver}`);
+    } else {
+      this.titleService.setTitle('New Store');
     }
   }
 }

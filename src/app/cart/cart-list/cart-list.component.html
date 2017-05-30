@@ -1,12 +1,22 @@
 <h1>{{title}}</h1>
-<table #cartTable class="table table-striped table-condensed table-responsive">
-  <tr *ngFor="let item of items | async" appHover appHighlightClick="blue">
-    <td>{{item.name}}</td>
-    <td>{{item.quantity}}</td>
-    <td>{{item.totalPrice}}</td>
-    <td appHighlightClick><input type="button" (click)="onRefuse(item)" value="Remove" /></td>
-  </tr>
-</table>
-<div *ngIf="cartTable.rows.length === 0">
-  <p>No items are available in your cart</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3"><p><b>Product name</b></p></div>
+    <div class="col-sm-2"><p><b>Item quantity</b></p></div>
+    <div class="col-sm-2"><p><b>Total price</b></p></div>
+    <div class="col-sm-1"></div>
+  </div>
+  <div *ngFor="let item of items | async" appHover appHighlightClick="blue" class="row">
+    <div class="col-sm-3"><p>{{item.name}}</p></div>
+    <div class="col-sm-2"><p>{{item.quantity}}</p></div>
+    <div class="col-sm-2"><p>{{item.totalPrice}}</p></div>
+    <div class="col-sm-1" appHighlightClick>
+      <button (click)="onRefuse(item)" class="btn-danger">Remove</button>
+    </div>
+  </div>
+  <div class="row" *ngIf="(items | async).length === 0">
+    <div class="col-sm-12">
+      <p>No items are available in your cart</p>
+    </div>
+  </div>
 </div>
