@@ -1,0 +1,8 @@
+<ul class="nav navbar-nav">
+  <li *ngIf="isAuthenticated" routerLinkActive="active">
+    <a routerLink="/cabinet">{{userName | async}}</a>
+  </li>
+  <li *ngIf="!isAuthenticated | async" routerLinkActive="active">
+    <a routerLink="/authenticate" [queryParams]="{ returnUrl: returnUrl | async }">Auth</a>
+  </li>
+</ul>

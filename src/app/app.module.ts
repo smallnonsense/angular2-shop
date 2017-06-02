@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CartModule, CartListComponent, BasketService } from './cart';
-import { ProductModule, ProductListComponent, ProductService } from './product';
-import { CommonModule } from './common';
+import { CartModule, CartListComponent, BasketService } from 'app/cart';
+import { ProductModule, ProductListComponent, ProductService } from 'app/product';
+import { CommonModule } from 'app/common';
+import { AuthModule } from 'app/auth';
+
 import { PageNotFountComponent } from './page-not-fount/page-not-fount.component';
 
 import { AppComponent } from './app.component';
@@ -22,7 +24,7 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [
     BrowserModule,
-    CartModule, ProductModule, CommonModule,
+    CartModule, ProductModule, CommonModule, AuthModule,
     RouterModule.forRoot(routes)
   ],
   providers: [

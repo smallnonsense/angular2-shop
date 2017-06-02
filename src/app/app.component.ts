@@ -1,8 +1,11 @@
 import { Component, Optional, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 
 import { InfoService } from 'app/common';
+import { User } from 'app/auth/user';
 
 
 @Component({
@@ -12,6 +15,8 @@ import { InfoService } from 'app/common';
 })
 export class AppComponent
   implements OnInit {
+
+  public user: Observable<User>;
 
   constructor(
     @Optional()

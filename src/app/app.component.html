@@ -15,14 +15,7 @@
         </ul>
       </div>
       <div class="col-sm-1">
-        <ul class="nav navbar-nav">
-          <li *ngIf="(user | async) !== null" routerLinkActive="active">
-            <a [routerLink]="['users', user.id]">{{user.fullName | async}}</a>
-          </li>
-          <li *ngIf="(user | async) === null" routerLinkActive="active">
-            <a routerLink="/authenticate" [queryParams]="{ returnUrl: '/todo' }">Auth</a>
-          </li>
-        </ul>
+        <app-auth-detail></app-auth-detail>
       </div>
     </div>
   </nav>

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
 
 import { BasketItem, BasketService } from 'app/cart';
 
