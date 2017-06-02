@@ -6,22 +6,24 @@ import { Routes, RouterModule } from '@angular/router';
 import { CartModule, CartListComponent, BasketService } from './cart';
 import { ProductModule, ProductListComponent, ProductService } from './product';
 import { CommonModule } from './common';
+import { PageNotFountComponent } from './page-not-fount/page-not-fount.component';
 
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
-  { path: 'products', component: ProductListComponent, data: { title: 'All Products' } }
+  { path: 'page/not/fount', component: PageNotFountComponent },
+  { path: '**', redirectTo: 'page/not/fount' }
 ];
 
 @NgModule({
   bootstrap: [AppComponent],
-  declarations: [AppComponent],
+  declarations: [AppComponent, PageNotFountComponent],
   exports: [RouterModule],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
-    CartModule, ProductModule, CommonModule
+    CartModule, ProductModule, CommonModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [
     ProductService,

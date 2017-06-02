@@ -1,16 +1,27 @@
 <h1>{{title}}</h1>
-<table #productTable class="table table-striped table-condensed table-responsive">
-  <tr *ngFor="let p of products | async" appHover [appHighlightClick]="'red'">
-    <td>{{p.name}}</td>
-    <td>{{p.description}}</td>
-    <td>{{p.price}}</td>
-    <td>{{p.category}}</td>
-    <td [appHighlightClick]="'yellow'">
-      <input type="checkbox" [checked]="p.isAvailable" disabled /></td>
-    <td [appHighlightClick]="'yellow'">
-      <button (click)="onBuy(p)" class="btn-success">Buy</button></td>
-  </tr>
-</table>
-<div *ngIf="productTable.rows.length === 0">
-  <p>No products are available</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2"><p><b>Name</b></p></div>
+    <div class="col-sm-2"><p><b>Description</b></p></div>
+    <div class="col-sm-1 text-right"><p><b>Price</b></p></div>
+    <div class="col-sm-1"><p><b>Category</b></p></div>
+    <div class="col-sm-1"><p><b>Available</b></p></div>
+  </div>
+  <div *ngFor="let p of products | async" appHover appHighlightClick class="row">
+    <div class="col-sm-2"><p>{{p.name}}</p></div>
+    <div class="col-sm-2"><p>{{p.description}}</p></div>
+    <div class="col-sm-1 text-right"><p>{{p.price.toFixed(2)}}</p></div>
+    <div class="col-sm-1"><p>{{p.category}}</p></div>
+    <div class="col-sm-1">
+      <input type="checkbox" [checked]="p.isAvailable" disabled />
+    </div>
+    <div class="col-sm-1">
+      <button (click)="onBuy(p)" class="btn-success">+</button>
+    </div>
+  </div>
+  <div class="row" *ngIf="(products | async).length === 0">
+    <div class="col-sm-12">
+      <p>No products are available in the list</p>
+    </div>
+  </div>
 </div>

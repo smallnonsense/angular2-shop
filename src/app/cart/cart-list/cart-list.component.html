@@ -1,22 +1,22 @@
 <h1>{{title}}</h1>
 <div class="container">
   <div class="row">
-    <div class="col-sm-3"><p><b>Product name</b></p></div>
-    <div class="col-sm-2"><p><b>Item quantity</b></p></div>
-    <div class="col-sm-2"><p><b>Total price</b></p></div>
+    <div class="col-sm-1"><p><b>Name</b></p></div>
+    <div class="col-sm-1 text-right"><p><b>Quantity</b></p></div>
+    <div class="col-sm-1 text-right"><p><b>Total</b></p></div>
     <div class="col-sm-1"></div>
   </div>
-  <div *ngFor="let item of items | async" appHover appHighlightClick="blue" class="row">
-    <div class="col-sm-3"><p>{{item.name}}</p></div>
-    <div class="col-sm-2"><p>{{item.quantity}}</p></div>
-    <div class="col-sm-2"><p>{{item.totalPrice}}</p></div>
+  <div *ngFor="let item of items | async" appHover appHighlightClick class="row">
+    <div class="col-sm-1"><p>{{item.name}}</p></div>
+    <div class="col-sm-1 text-right"><p>{{item.quantity}}</p></div>
+    <div class="col-sm-1 text-right"><p>{{item.totalPrice.toFixed(2)}}</p></div>
     <div class="col-sm-1" appHighlightClick>
-      <button (click)="onRefuse(item)" class="btn-danger">Remove</button>
+      <button (click)="onRefuse(item)" class="btn-danger">X</button>
     </div>
   </div>
   <div class="row" *ngIf="(items | async).length === 0">
     <div class="col-sm-12">
-      <p>No items are available in your cart</p>
+      <p>No items are available in the list</p>
     </div>
   </div>
 </div>
