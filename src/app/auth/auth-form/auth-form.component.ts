@@ -12,6 +12,8 @@ import { AuthService } from 'app/auth/auth.service';
 })
 export class AuthFormComponent implements OnInit {
 
+  public login: string;
+  public password: string;
   public returnUrl: Observable<string>;
 
   constructor(
@@ -20,6 +22,6 @@ export class AuthFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.queryParams.map(params => params.returnUrl || '/');
+    this.returnUrl = this.route.queryParams.map(params => params.returnUrl);
   }
 }

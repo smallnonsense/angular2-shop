@@ -1,25 +1,24 @@
 <div>
   <nav class="navbar navbar-default">
-    <div class="row">
-      <div class="col-sm-11">
-        <ul class="nav navbar-nav">
-          <li class="navbar-header">
-            <a class="navbar-brand btn" routerLink="/">Home</a>
-          </li>
-          <li routerLinkActive="active">
-            <a routerLink="/products">Products</a>
-          </li>
-          <li routerLinkActive="active">
-            <a routerLink="/cart">Cart</a>
-          </li>
-        </ul>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand btn" routerLink="/">Home</a>
       </div>
-      <div class="col-sm-1">
-        <app-auth-detail></app-auth-detail>
-      </div>
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active">
+          <a routerLink="/products">Products</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/cart">Cart</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <app-auth-detail></app-auth-detail>
+        </li>
+      </ul>
     </div>
   </nav>
-
   <div class="container-fluid pull-right">
     <app-cart-detail></app-cart-detail>
   </div>

@@ -10,10 +10,10 @@ export class AuthService {
 
   constructor() { }
 
-  public authorized() {
+  public authorizedUser() {
     return this.authUser.asObservable();
   }
   public authorize(user: User) {
-    return this.authUser.next(user);
+    this.authUser.next(user);
   }
 }
