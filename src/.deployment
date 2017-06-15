@@ -1,2 +1,2 @@
 [config]
-command=dist
+project=dist
