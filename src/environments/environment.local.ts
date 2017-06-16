@@ -1,6 +1,6 @@
 import { Environment } from 'environments/environment.model';
 
 export const environment: Environment = {
-  production: true,
-  baseUrl: '/'
+  production: false,
+  baseUrl: '/angular2-shop'
 };

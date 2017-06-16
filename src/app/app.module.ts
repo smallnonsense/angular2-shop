@@ -8,8 +8,9 @@ import { ProductModule, ProductListComponent, ProductService } from 'app/product
 import { CommonModule } from 'app/common';
 import { AuthModule } from 'app/auth';
 
-import { PageNotFountComponent } from './page-not-fount/page-not-fount.component';
+import { environment } from 'environments';
 
+import { PageNotFountComponent } from './page-not-fount/page-not-fount.component';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
@@ -30,7 +31,7 @@ const routes: Routes = [
   providers: [
     ProductService,
     BasketService,
-    { provide: APP_BASE_HREF, useValue: '/' }
+    { provide: APP_BASE_HREF, useValue: environment.baseUrl }
   ]
 })
 export class AppModule { }
