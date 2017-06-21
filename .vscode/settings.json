@@ -4,6 +4,8 @@
     "editor.codeLens": true,
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
+    "editor.fontSize": 12,
     "files.exclude": {
         "node_modules/**": true,
         "**/.git": true,
