@@ -1,5 +1,5 @@
-export class User {
-  public id: string;
-  public fullName: string;
-  public permissions: string[];
+export interface User {
+  id: string;
+  fullName: string;
+  permissions: string[];
 }

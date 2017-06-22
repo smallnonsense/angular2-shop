@@ -24,4 +24,8 @@ export class AuthFormComponent implements OnInit {
   ngOnInit() {
     this.returnUrl = this.route.queryParams.map(params => params.returnUrl);
   }
+
+  authenticate() {
+    this.authService.authorize(this.login, this.password);
+  }
 }
