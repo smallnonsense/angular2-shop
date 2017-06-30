@@ -21,11 +21,11 @@ export class AuthFormComponent implements OnInit {
     private authService: AuthService) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.returnUrl = this.route.queryParams.map(params => params.returnUrl);
   }
 
-  authenticate() {
+  public authenticate() {
     this.authService.authorize(this.login, this.password);
   }
 }
