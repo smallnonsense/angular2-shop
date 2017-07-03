@@ -20,9 +20,15 @@ export class AuthService {
   public authorizedUser() {
     return this.authUser.asObservable();
   }
-
   public authorize(login: string, password: string) {
     const user: User = { id: '1', fullName: login, permissions: ['admin'] };
+    this.setUser(user);
+  }
+  public deauthorize() {
+    this.setUser(null);
+  }
+
+  private setUser(user: User) {
     this.storageService.setItem('user', JSON.stringify(user))
     this.authUser.next(user);
   }

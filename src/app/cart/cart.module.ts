@@ -3,6 +3,7 @@ import { CommonModule as CModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CommonModule } from 'app/common';
+import { AuthenticateGuard } from 'app/auth';
 
 import { CartListComponent, CartDetailComponent } from './';
 import { CartCheckoutComponent } from './cart-checkout/cart-checkout.component';
@@ -10,6 +11,7 @@ import { CartCheckoutComponent } from './cart-checkout/cart-checkout.component';
 const routes: Routes = [
   {
     path: 'cart',
+    canActivateChild: [AuthenticateGuard],
     children: [
       { path: '', component: CartListComponent, pathMatch: 'full' },
       { path: 'detail', component: CartDetailComponent },

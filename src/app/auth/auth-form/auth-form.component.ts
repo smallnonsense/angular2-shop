@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 
 import { User } from 'app/auth/user';
 import { AuthService } from 'app/auth/auth.service';
@@ -14,7 +13,7 @@ export class AuthFormComponent implements OnInit {
 
   public login: string;
   public password: string;
-  public returnUrl: Observable<string>;
+  public returnUrl: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +21,7 @@ export class AuthFormComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.returnUrl = this.route.queryParams.map(params => params.returnUrl);
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
   public authenticate() {

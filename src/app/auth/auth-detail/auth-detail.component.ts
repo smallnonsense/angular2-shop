@@ -48,4 +48,8 @@ export class AuthDetailComponent
       .map<NavigationEnd, string>(event => event.urlAfterRedirects || event.url)
       .merge(defaultUrl);
   }
+
+  public logOff() {
+    this.authService.deauthorize();
+  }
 }

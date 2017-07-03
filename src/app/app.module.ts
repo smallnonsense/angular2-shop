@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CartModule, CartListComponent, BasketService } from 'app/cart';
 import { ProductModule, ProductListComponent, ProductService } from 'app/product';
 import { CommonModule } from 'app/common';
-import { AuthModule } from 'app/auth';
+import { AuthModule, AuthenticateGuard } from 'app/auth';
 
 import { environment } from 'environments';
 
@@ -31,6 +31,7 @@ const routes: Routes = [
   providers: [
     ProductService,
     BasketService,
+    AuthenticateGuard,
     { provide: APP_BASE_HREF, useValue: environment.baseUrl }
   ]
 })
