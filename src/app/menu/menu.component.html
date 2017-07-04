@@ -1,0 +1,8 @@
+<ul class="nav navbar-nav">
+  <li *ngIf="showProducts | async" routerLinkActive="active">
+    <a routerLink="/products">Products</a>
+  </li>
+  <li *ngIf="showCart | async" routerLinkActive="active">
+    <a routerLink="/cart">Cart</a>
+  </li>
+</ul>

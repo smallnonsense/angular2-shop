@@ -5,11 +5,10 @@
       <div class="col-sm-9">
         <input #email="ngModel" [(ngModel)]="login" id="email" name="email" type="email" class="form-control" placeholder="Enter email" autofocus required email>
         <div *ngIf="email.invalid && email.touched" class="alert alert-danger">
-          <!--<p>{{email.errors | json}}</p>-->
           <div *ngIf="email.errors.required">
             Field is required!
           </div>
-          <div *ngIf="email.errors.email">
+          <div *ngIf="!email.errors.required && email.errors.email">
             This is not email!
           </div>
         </div>
@@ -20,7 +19,6 @@
       <div class="col-sm-9">
         <input #pwd="ngModel" [(ngModel)]="password" id="pwd" name="pwd" type="password" class="form-control" placeholder="Enter password" required minlength="6">
         <div *ngIf="pwd.invalid && pwd.touched" class="alert alert-danger">
-          <!--<p>{{pwd.errors | json}}</p>-->
           <div *ngIf="pwd.errors.required">
             Field is required!
           </div>
@@ -34,7 +32,7 @@
       <div class="col-sm-offset-3 col-sm-9">
         <button [routerLink]="returnUrl" (click)="authenticate()" [disabled]="!bookForm.valid" type="button" class="btn">Log In</button>
         <label for="remember" class="checkbox-inline">
-        <input type="checkbox" id="remember" disabled>Remember me
+          <input [(ngModel)]="asAdministrator" type="checkbox" id="asAdmin" name="asAdmin">As Administrator
         </label>
       </div>
     </div>

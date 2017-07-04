@@ -7,11 +7,13 @@ import { AuthenticateGuard } from 'app/auth';
 
 import { CartListComponent, CartDetailComponent } from './';
 import { CartCheckoutComponent } from './cart-checkout/cart-checkout.component';
+import { CartGuard } from './cart.guard';
 
 const routes: Routes = [
   {
     path: 'cart',
-    canActivateChild: [AuthenticateGuard],
+    canActivate: [CartGuard],
+    canActivateChild: [CartGuard],
     children: [
       { path: '', component: CartListComponent, pathMatch: 'full' },
       { path: 'detail', component: CartDetailComponent },
@@ -28,5 +30,6 @@ const routes: Routes = [
     CModule,
     CommonModule
   ],
+  providers: [CartGuard]
 })
 export class CartModule { }

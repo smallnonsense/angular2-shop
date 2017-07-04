@@ -3,6 +3,9 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/toPromise';
 
 import { InfoService } from 'app/common';
 import { User } from 'app/auth/user';
@@ -21,8 +24,7 @@ export class AppComponent
   constructor(
     @Optional()
     private infoService: InfoService,
-    private titleService: Title) {
-  }
+    private titleService: Title) { }
 
   ngOnInit() {
     if (this.infoService) {

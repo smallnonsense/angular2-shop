@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
 
 import { BasketItem, BasketService } from 'app/cart';
 

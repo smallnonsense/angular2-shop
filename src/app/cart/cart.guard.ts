@@ -6,11 +6,10 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from './auth.service';
-import { UserClaim } from './user-claim.enum';
+import { AuthService, UserClaim } from 'app/auth';
 
 @Injectable()
-export class AuthenticateGuard implements CanActivate, CanActivateChild {
+export class CartGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private authService: AuthService,
@@ -19,11 +18,11 @@ export class AuthenticateGuard implements CanActivate, CanActivateChild {
   public canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    const isAthenticated = this.authService.user.claims.includes(UserClaim.Trusted)
-    if (!isAthenticated) {
-      this.router.navigate(['authenticate'], { queryParams: { returnUrl: state.url } });
+    const hasCart = this.authService.user.claims.includes(UserClaim.Cart)
+    if (!hasCart) {
+      this.router.navigate(['']);
     };
-    return isAthenticated;
+    return hasCart;
   }
   public canActivateChild(childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {

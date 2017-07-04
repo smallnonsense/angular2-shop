@@ -1,9 +1,7 @@
+import { UserClaim } from 'app/auth/user-claim.enum';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/merge';
 
 import { User } from 'app/auth/user';
 import { AuthService } from 'app/auth/auth.service';
@@ -19,7 +17,7 @@ export class AuthDetailComponent
   implements OnInit {
 
   public isAuthenticated: Observable<boolean>;
-  public userId: Observable<string>;
+  public isAdmin: Observable<boolean>;
   public userName: Observable<string>;
   public returnUrl: Observable<string>;
 
@@ -29,17 +27,17 @@ export class AuthDetailComponent
     private authService: AuthService) { }
 
   public ngOnInit() {
-    const user = this.authService.authorizedUser();
-    this.isAuthenticated = user.map(u => u !== null);
-    this.userId = user.filter(u => u !== null).map(u => u.id || '0');
-    this.userName = user.filter(u => u !== null).map(u => u.fullName || 'Unknown User');
+    const user = this.authService.observableUser;
+    this.isAuthenticated = user.map(u => u.claims.includes(UserClaim.Trusted));
+    this.isAdmin = user.map(u => u.claims.includes(UserClaim.Admin));
+    this.userName = user.map(u => u.fullName);
 
     const defaultUrl = this.router.events
       .filter(event => event instanceof NavigationEnd)
       .filter(event =>
         this.route.firstChild.component === AuthFormComponent
         || this.route.firstChild.component === PageNotFountComponent)
-      .map<NavigationEnd, string>(event => '/');
+      .map<NavigationEnd, string>(event => this.route.snapshot.queryParams.returnUrl || '/');
     this.returnUrl = this.router.events
       .filter(event => event instanceof NavigationEnd)
       .filter(event =>
@@ -50,6 +48,6 @@ export class AuthDetailComponent
   }
 
   public logOff() {
-    this.authService.deauthorize();
+    this.authService.logOff();
   }
 }

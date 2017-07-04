@@ -13,18 +13,16 @@ export class StorageService {
 
   public getItem(key: string) {
     if (!localStorage) {
-      console.log(`Can't get item '${key}'. ` + this.notSupportedMessage);
+      console.warn(`Can't get item '${key}'. ` + this.notSupportedMessage);
       return null;
     }
     const data = localStorage.getItem(key);
-    console.log(`fetched data ('${key}','${data}')`);
     return data;
   }
   public setItem(key: string, data: string) {
     if (!localStorage) {
-      console.log(`Can't set item ('${key}', '${data}'). ` + this.notSupportedMessage);
+      console.warn(`Can't set item ('${key}', '${data}'). ` + this.notSupportedMessage);
     }
     localStorage.setItem(key, data);
-    console.log(`persisted data ('${key}','${data}')`);
   }
 }

@@ -1,21 +1,14 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/">Home</a>
+      <a class="navbar-brand" routerLink="/">Home</a>
     </div>
-    <ul class="nav navbar-nav">
-      <li routerLinkActive="active">
-        <a routerLink="/products">Products</a>
-      </li>
-      <li routerLinkActive="active">
-        <a routerLink="/cart">Cart</a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <app-auth-detail></app-auth-detail>
-      </li>
-    </ul>
+    <div class="nav navbar-nav navbar-left">
+      <app-menu></app-menu>
+    </div>
+    <div class="nav navbar-nav navbar-right">
+      <app-auth-detail></app-auth-detail>
+    </div>
   </div>
 </nav>
 <div class="container-fluid pull-right">

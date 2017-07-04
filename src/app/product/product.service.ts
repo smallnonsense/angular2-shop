@@ -24,11 +24,11 @@ export class ProductService {
     } else {
       this.products.next((JSON.parse(data) as Array<any>)
       .map(item => new Product(
-        item['name'],
-        item['description'],
-        parseFloat(item['price']),
-        <ProductCategory>item['categoryType'],
-        <boolean>item['isAvailable'])));
+        item.name,
+        item.description,
+        parseFloat(item.price),
+        <ProductCategory>item.categoryType,
+        <boolean>item.isAvailable)));
     }
   }
 

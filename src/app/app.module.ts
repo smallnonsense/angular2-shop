@@ -12,6 +12,7 @@ import { environment } from 'environments';
 
 import { PageNotFountComponent } from './page-not-fount/page-not-fount.component';
 import { AppComponent } from './app.component';
+import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -21,7 +22,7 @@ const routes: Routes = [
 
 @NgModule({
   bootstrap: [AppComponent],
-  declarations: [AppComponent, PageNotFountComponent],
+  declarations: [AppComponent, PageNotFountComponent, MenuComponent],
   exports: [RouterModule],
   imports: [
     BrowserModule,
@@ -31,7 +32,6 @@ const routes: Routes = [
   providers: [
     ProductService,
     BasketService,
-    AuthenticateGuard,
     { provide: APP_BASE_HREF, useValue: environment.baseUrl }
   ]
 })
