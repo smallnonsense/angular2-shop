@@ -3,16 +3,13 @@ import { CommonModule as CModule } from '@angular/common';
 
 import {
   HoverDirective, HighlightClickDirective,
-  StorageService, InfoService, KeyGenService, KeygenLength
+  StorageService, InfoService
 } from './';
 
 @NgModule({
   declarations: [HoverDirective, HighlightClickDirective],
   imports: [CModule],
-  providers: [
-    StorageService, InfoService, KeyGenService,
-    { provide: KeygenLength, useValue: 5 }
-  ],
+  providers: [StorageService, InfoService],
   exports: [HoverDirective, HighlightClickDirective]
 })
 export class CommonModule { }
