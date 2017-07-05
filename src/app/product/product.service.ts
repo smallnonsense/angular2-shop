@@ -13,6 +13,14 @@ export class ProductService {
   private products: BehaviorSubject<Product[]> = new BehaviorSubject([]);
 
   public constructor(private storage: StorageService) {
+    this.restore(storage);
+  }
+
+  public getAllProducts(): Observable<Product[]> {
+    return this.products.asObservable();
+  }
+
+  private restore(storage: StorageService) {
     const data = storage.getItem('products');
     if (!data) {
       this.products.next([
@@ -22,17 +30,14 @@ export class ProductService {
       ]);
       this.storage.setItem('products', JSON.stringify(this.products.getValue()));
     } else {
-      this.products.next((JSON.parse(data) as Array<any>)
+      const products = (JSON.parse(data) as Array<any>)
       .map(item => new Product(
         item.name,
         item.description,
         parseFloat(item.price),
         <ProductCategory>item.categoryType,
-        <boolean>item.isAvailable)));
+        <boolean>item.isAvailable))
+      this.products.next(products);
     }
-  }
-
-  public getAllProducts(): Observable<Product[]> {
-    return this.products.asObservable();
   }
 }

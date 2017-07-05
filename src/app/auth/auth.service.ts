@@ -11,17 +11,8 @@ export class AuthService {
 
   private authUser = new BehaviorSubject<User>(this.guest);
 
-  constructor(private storageService: StorageService) {
-    const object = JSON.parse(this.storageService.getItem('user'));
-    if (object !== null) {
-      const user: User = {
-        id: object.id,
-        fullName: object.fullName,
-        email: object.email,
-        claims: (object.claims as Array<any>).map(claim => <UserClaim>claim)
-      };
-      this.authUser.next(user);
-    }
+  constructor(private storage: StorageService) {
+    this.restore(storage);
   }
 
   public get observableUser() {
@@ -47,8 +38,21 @@ export class AuthService {
     this.setUser(null);
   }
 
+  private restore(storage: StorageService) {
+    const object = JSON.parse(storage.getItem('user'));
+    if (!object) {
+      return;
+    }
+    const user: User = {
+      id: object.id,
+      fullName: object.fullName,
+      email: object.email,
+      claims: (object.claims as Array<any>).map(claim => <UserClaim>claim)
+    };
+    this.authUser.next(user);
+  }
   private setUser(user: User) {
-    this.storageService.setItem('user', JSON.stringify(user))
+    this.storage.setItem('user', JSON.stringify(user))
     this.authUser.next(user || this.guest);
   }
 }
