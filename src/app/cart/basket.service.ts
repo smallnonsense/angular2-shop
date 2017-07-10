@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
+import { AuthService, User } from 'app/auth';
 import { StorageService } from 'app/common/storage.service'
 
 import { BasketItem } from './basket-item';
@@ -10,16 +11,12 @@ import { BasketItem } from './basket-item';
 export class BasketService {
 
   private baskets: BehaviorSubject<BasketItem[]> = new BehaviorSubject([]);
+  private storageKey: string;
 
-  public constructor(private storage: StorageService) {
-    const data = storage.getItem('baskets');
-    if (data) {
-      this.baskets.next((JSON.parse(data) as Array<any>)
-        .map(item => new BasketItem(
-          item.name,
-          parseInt(item.quantity, 0),
-          parseFloat(item.totalPrice))));
-    }
+  public constructor(
+    private storage: StorageService,
+    private authService: AuthService) {
+    authService.observableUser.subscribe(user => this.restore(user));
   }
 
   public getBasketItems(): Observable<BasketItem[]> {
@@ -39,7 +36,7 @@ export class BasketService {
     }
 
     const data = JSON.stringify(this.baskets.getValue());
-    this.storage.setItem('baskets', data);
+    this.storage.setItem(this.storageKey, data);
   }
 
   public removeItem(item: BasketItem) {
@@ -49,10 +46,27 @@ export class BasketService {
     this.baskets.next(updatedBasket);
 
     const data = JSON.stringify(updatedBasket);
-    this.storage.setItem('baskets', data);
+    this.storage.setItem(this.storageKey, data);
   }
 
   private round(value: number): number {
     return Math.round(value * 100) / 100;
+  }
+
+  private restore(user: User) {
+    const newUser = user || this.authService.guest;
+    this.storageKey = newUser.id + '.baskets';
+
+    const data = this.storage.getItem(this.storageKey);
+    if (!data) {
+      this.baskets.next([]);
+      return;
+    }
+    const basketData = (JSON.parse(data) as Array<any>);
+    const basketItems = basketData.map(item => new BasketItem(
+      item.name,
+      parseInt(item.quantity, 0),
+      parseFloat(item.totalPrice)));
+    this.baskets.next(basketItems);
   }
 }

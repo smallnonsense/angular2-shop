@@ -22,16 +22,16 @@ export class AuthService {
     return this.authUser.value;
   }
   public get guest(): User {
-    return { id: '0', fullName: 'Guest', email: null, claims: [UserClaim.Products, UserClaim.Cart] };
+    return { id: 'guest', fullName: 'Guest', email: null, claims: [UserClaim.Products, UserClaim.Cart] };
   }
   public logIn(email: string, password: string) {
     const claims = [UserClaim.Trusted, UserClaim.Products, UserClaim.Cart];
-    const user: User = { id: '1', fullName: email, email: email, claims: claims };
+    const user: User = { id: email, fullName: email, email: email, claims: claims };
     this.setUser(user);
   }
   public logInAsAdministrator(email: string, password: string) {
     const claims = [UserClaim.Trusted, UserClaim.Products, UserClaim.Admin];
-    const user: User = { id: '2', fullName: email, email: email, claims: claims };
+    const user: User = { id: '1', fullName: email, email: email, claims: claims };
     this.setUser(user);
   }
   public logOff() {

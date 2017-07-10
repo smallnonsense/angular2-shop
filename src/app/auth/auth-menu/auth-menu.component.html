@@ -4,14 +4,14 @@
         <span *ngIf="isAdmin | async" [style.color]="'red'">[admin]</span>
         {{userName | async}}
         <span class="caret"></span></a>
-        <ul class="dropdown-menu dropdown-menu-left">
-          <li><a routerLink="/cabinet" class="btn btn-md">Cabinet</a></li>
-          <li class="divider"></li>
-          <li><a (click)="logOff()" class="btn btn-md">Log Off</a></li>
-        </ul>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li><a routerLink="/cabinet" class="btn btn-md">Cabinet</a></li>
+      <li class="divider"></li>
+      <li><a (click)="logOff()" class="btn btn-md">Log Off</a></li>
+    </ul>
   </li>
   <li *ngIf="!(isAuthenticated | async)" routerLinkActive="active">
-    <a routerLink="/authenticate" [queryParams]="{ returnUrl: returnUrl | async }">
+    <a routerLink="/authenticate" [queryParams]="{ returnUrl: returnUrl }">
     <span class="glyphicon glyphicon-log-in"></span> Log In</a>
   </li>
 </ul>

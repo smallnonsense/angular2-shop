@@ -9,17 +9,17 @@ import { AuthFormComponent } from 'app/auth';
 import { PageNotFountComponent } from 'app/page-not-fount/page-not-fount.component';
 
 @Component({
-  selector: 'app-auth-detail',
-  templateUrl: './auth-detail.component.html',
-  styleUrls: ['./auth-detail.component.css']
+  selector: 'app-auth-menu',
+  templateUrl: './auth-menu.component.html',
+  styleUrls: ['./auth-menu.component.css']
 })
-export class AuthDetailComponent
+export class AuthMenuComponent
   implements OnInit {
 
   public isAuthenticated: Observable<boolean>;
   public isAdmin: Observable<boolean>;
   public userName: Observable<string>;
-  public returnUrl: Observable<string>;
+  public returnUrl: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,19 +32,13 @@ export class AuthDetailComponent
     this.isAdmin = user.map(u => u.claims.includes(UserClaim.Admin));
     this.userName = user.map(u => u.fullName);
 
-    const defaultUrl = this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .filter(event =>
-        this.route.firstChild.component === AuthFormComponent
-        || this.route.firstChild.component === PageNotFountComponent)
-      .map<NavigationEnd, string>(event => this.route.snapshot.queryParams.returnUrl || '/');
-    this.returnUrl = this.router.events
+    this.router.events
       .filter(event => event instanceof NavigationEnd)
       .filter(event =>
         this.route.firstChild.component !== AuthFormComponent
         && this.route.firstChild.component !== PageNotFountComponent)
-      .map<NavigationEnd, string>(event => event.urlAfterRedirects || event.url)
-      .merge(defaultUrl);
+      .subscribe((event: NavigationEnd) =>
+        this.returnUrl = event.urlAfterRedirects || event.url || '/');
   }
 
   public logOff() {
