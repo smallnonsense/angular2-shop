@@ -13,10 +13,10 @@
     <div class="col-sm-1 text-right"><p>{{p.price.toFixed(2)}}</p></div>
     <div class="col-sm-1"><p>{{p.category}}</p></div>
     <div class="col-sm-1">
-      <input type="checkbox" [checked]="p.isAvailable" disabled />
+      <input [checked]="p.isAvailable" class="checkbox checkbox-inline" type="checkbox" disabled />
     </div>
     <div class="col-sm-1">
-      <button (click)="onBuy(p)" class="btn-success">+</button>
+      <button (click)="onBuy(p)" class="btn-xs btn-success">+</button>
     </div>
   </div>
   <div class="row" *ngIf="(products | async).length === 0">

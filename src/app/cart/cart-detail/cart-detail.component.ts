@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
-import { BasketItem, BasketService } from 'app/cart';
+import { BasketItem, BasketCachingService } from 'app/cart';
 
 @Component({
   selector: 'app-cart-detail',
@@ -13,10 +13,10 @@ export class CartDetailComponent implements OnInit {
   public itemsCount: Observable<number>;
   public totalAmount: Observable<number>;
 
-  public constructor(private basketService: BasketService) { }
+  public constructor(private service: BasketCachingService) { }
 
   public ngOnInit() {
-    const basketItems: Observable<BasketItem[]> = this.basketService.getBasketItems();
+    const basketItems: Observable<BasketItem[]> = this.service.getItems();
     this.itemsCount = basketItems.map(items =>
       items.map(item => item.quantity).reduce(this.sum, 0));
     this.totalAmount = basketItems.map(items =>

@@ -11,7 +11,7 @@
     <div class="col-sm-1 text-right"><p>{{item.quantity}}</p></div>
     <div class="col-sm-1 text-right"><p>{{item.totalPrice.toFixed(2)}}</p></div>
     <div class="col-sm-1" appHighlightClick>
-      <button (click)="onRefuse(item)" class="btn-danger">X</button>
+      <button (click)="onRefuse(item)" class="btn-xs btn-danger">X</button>
     </div>
   </div>
   <div class="row" *ngIf="(items | async).length === 0">

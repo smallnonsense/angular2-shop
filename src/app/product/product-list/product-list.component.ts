@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Product } from 'app/product/product';
-import { ProductService } from 'app/product/product.service';
+import { Product, ProductService } from 'app/product';
 
-import { BasketItem } from 'app/cart/basket-item';
-import { BasketService } from 'app/cart/basket.service';
+import { BasketItem, BasketCachingService } from 'app/cart';
 
 @Component({
   selector: 'app-product-list',
@@ -21,7 +19,7 @@ export class ProductListComponent implements OnInit {
 
   public constructor(
     private productService: ProductService,
-    private basketService: BasketService) { }
+    private basketService: BasketCachingService) { }
 
   public ngOnInit() {
     this.products = this.productService.getAllProducts();

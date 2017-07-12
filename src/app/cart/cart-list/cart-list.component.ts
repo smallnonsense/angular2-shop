@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { BasketItem } from 'app/cart/basket-item';
-import { BasketService } from 'app/cart/basket.service';
+import { BasketItem, BasketCachingService } from 'app/cart';
 
 @Component({
   selector: 'app-cart-list',
@@ -15,13 +14,13 @@ export class CartListComponent implements OnInit {
   public title = 'Cart';
   public items: Observable<BasketItem[]>;
 
-  public constructor(private basketService: BasketService) { }
+  public constructor(private service: BasketCachingService) { }
 
   public ngOnInit() {
-    this.items = this.basketService.getBasketItems();
+    this.items = this.service.getItems();
   }
 
   public onRefuse(item: BasketItem) {
-    this.basketService.removeItem(item);
+    this.service.removeItem(item);
   }
 }

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CartModule, CartListComponent, BasketService } from 'app/cart';
+import { CartModule, CartListComponent, BasketService, BasketCachingService } from 'app/cart';
 import { ProductModule, ProductListComponent, ProductService } from 'app/product';
 import { CommonModule } from 'app/common';
 import { AuthModule, AuthenticateGuard } from 'app/auth';
@@ -32,6 +32,7 @@ const routes: Routes = [
   providers: [
     ProductService,
     BasketService,
+    BasketCachingService,
     { provide: APP_BASE_HREF, useValue: environment.baseUrl }
   ]
 })
