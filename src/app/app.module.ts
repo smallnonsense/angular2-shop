@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
+import { Router, Routes, RouterModule } from '@angular/router';
 
 import { CartModule, CartListComponent, BasketService, BasketCachingService } from 'app/cart';
 import { ProductModule, ProductListComponent, ProductService } from 'app/product';
@@ -38,4 +38,13 @@ const routes: Routes = [
     { provide: APP_BASE_HREF, useValue: environment.baseUrl }
   ]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private router: Router) {
+    console.log(`Base URL: ${environment.baseUrl}`);
+    if (!environment.production) {
+      this.router.events.subscribe(event => console.log(event));
+    }
+  }
+}
+
