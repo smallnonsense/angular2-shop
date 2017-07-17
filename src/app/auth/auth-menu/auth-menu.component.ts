@@ -38,7 +38,15 @@ export class AuthMenuComponent
         this.route.firstChild.component !== AuthFormComponent
         && this.route.firstChild.component !== PageNotFountComponent)
       .subscribe((event: NavigationEnd) =>
-        this.returnUrl = event.urlAfterRedirects || event.url || '/');
+      this.returnUrl = event.urlAfterRedirects || event.url || '/');
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .filter(event =>
+        this.route.firstChild.component !== AuthFormComponent
+        && this.route.firstChild.component !== PageNotFountComponent)
+      .subscribe((event: NavigationEnd) =>
+        console.log());
+      this.router.events.subscribe(event => console.log(event));
   }
 
   public logOff() {

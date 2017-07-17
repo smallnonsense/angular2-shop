@@ -16,14 +16,29 @@ export class AuthFormComponent implements OnInit {
   public login: string;
   public password: string;
   public asAdministrator = false;
-  public returnUrl: string;
+  public returnUrl: string[];
+  public returnParams: {};
 
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService) { }
 
   public ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+    const url = decodeURIComponent(this.route.snapshot.queryParams.returnUrl || '/');
+    const queryParamsStartsAt = url.indexOf('?');
+    if (queryParamsStartsAt <= 0) {
+      this.returnUrl =url.split('/').map(fragment => fragment || '/');
+      this.returnParams = {};
+      return;
+    }
+
+    const query = url.substring(0, queryParamsStartsAt);
+    const params = url.substring(queryParamsStartsAt + 1);
+    this.returnUrl = query.split('/').map(fragment => fragment || '/');
+    this.returnParams = params.split('&')
+      .map(pair => pair.split('='))
+      .map(pair => ({ [pair[0]]: pair[1] }))
+      .reduce((obj, pair) => Object.assign(obj, pair), {});
   }
 
   public authenticate() {

@@ -13,16 +13,18 @@ import { environment } from 'environments';
 import { PageNotFountComponent } from './page-not-fount/page-not-fount.component';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
   { path: 'page/not/fount', component: PageNotFountComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '**', redirectTo: 'page/not/fount' }
 ];
 
 @NgModule({
   bootstrap: [AppComponent],
-  declarations: [AppComponent, PageNotFountComponent, MenuComponent],
+  declarations: [AppComponent, PageNotFountComponent, UnauthorizedComponent, MenuComponent],
   exports: [RouterModule],
   imports: [
     BrowserModule,

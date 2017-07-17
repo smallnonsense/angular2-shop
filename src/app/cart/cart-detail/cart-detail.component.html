@@ -1,7 +1,7 @@
 <div>
   <div *ngIf="(itemsCount | async) !== 0">
     <p class="text-center">Cart contains <b>{{itemsCount | async}}</b> item(s) for <b>${{totalAmount | async}}</b></p>
-    <button routerLink="/cart/checkout" routerLinkActive="disabled" class="btn">Checkout</button>
+    <a routerLink="/cart/checkout" routerLinkActive="disabled" class="btn btn-default">Checkout</a>
   </div>
   <div *ngIf="(itemsCount | async) === 0">
     <p>Cart is empty</p>
