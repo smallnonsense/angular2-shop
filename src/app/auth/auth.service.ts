@@ -34,6 +34,9 @@ export class AuthService {
     const user: User = { id: '1', fullName: email, email: email, claims: claims };
     this.setUser(user);
   }
+  public refresh() {
+    this.restore(this.storage);
+  }
   public logOff() {
     this.setUser(null);
   }

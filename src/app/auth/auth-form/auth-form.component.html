@@ -30,7 +30,7 @@
     </div>
     <div class="form-group">
       <div class="col-sm-offset-3 col-sm-9">
-        <a [routerLink]="returnUrl" [queryParams]="returnParams" (click)="authenticate()" [ngClass]="{'disabled': !bookForm.valid }" class="btn btn-default">Log In</a>
+        <a [routerLink]="returnUrl | async" [queryParams]="returnParams | async" (click)="authenticate()" [ngClass]="{'disabled': !bookForm.valid }" class="btn btn-default">Log In</a>
         <label for="remember" class="checkbox-inline">
           <input [(ngModel)]="asAdministrator" type="checkbox" id="asAdmin" name="asAdmin">As Administrator
         </label>

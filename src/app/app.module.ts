@@ -43,7 +43,7 @@ export class AppModule {
   constructor(private router: Router) {
     console.log(`Base URL: ${environment.baseUrl}`);
     if (!environment.production) {
-      this.router.events.subscribe(event => console.log(event));
+      // log debug information
     }
   }
 }

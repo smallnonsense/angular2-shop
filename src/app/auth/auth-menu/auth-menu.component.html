@@ -1,17 +1,18 @@
 <ul class="nav navbar-nav dropdown">
-  <li *ngIf="isAuthenticated | async" routerLinkActive="active">
+  <li *ngIf="isAuthenticated | async" routerLinkActive="active" class="nav-item">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <span *ngIf="isAdmin | async" [style.color]="'red'">[admin]</span>
         {{userName | async}}
         <span class="caret"></span></a>
     <ul class="dropdown-menu dropdown-menu-right">
-      <li><a routerLink="/cabinet" class="btn btn-md">Cabinet</a></li>
+      <li class="nav-item"><a routerLink="/cabinet" class="nav-link">Cabinet</a></li>
+      <li class="nav-item"><a (click)="refresh()" class="nav-link">Refresh</a></li>
       <li class="divider"></li>
-      <li><a (click)="logOff()" class="btn btn-md">Log Off</a></li>
+      <li class="nav-item"><a (click)="logOff()" class="nav-link">Log Off</a></li>
     </ul>
   </li>
-  <li *ngIf="!(isAuthenticated | async)" routerLinkActive="active">
-    <a routerLink="/authenticate" [queryParams]="{ returnUrl: returnUrl }">
-    <span class="glyphicon glyphicon-log-in"></span> Log In</a>
+  <li *ngIf="!(isAuthenticated | async)" routerLinkActive="disabled" class="nav-item">
+    <a routerLink="/authenticate" [queryParams]="returnParams | async" class="nav-link">
+    <span class="glyphicon glyphicon-log-in" class="nav-link"></span> Log In</a>
   </li>
 </ul>
