@@ -32,10 +32,5 @@ export class HighlightClickDirective {
       this.color = this.originalColor;
       this.originalColor = null;
     }
-    // console.log('HighlightClickDirective.weight.old:' + this.originalWeight);
-    // console.log('HighlightClickDirective.weight.new:' + this.weight);
-    // console.log('HighlightClickDirective.color.defined:' + this.appHighlightClick);
-    // console.log('HighlightClickDirective.color.old:' + this.originalColor);
-    // console.log('HighlightClickDirective.color.new:' + this.color);
   }
 }

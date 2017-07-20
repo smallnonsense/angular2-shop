@@ -7,7 +7,7 @@
     <div class="col-sm-1"><p><b>Category</b></p></div>
     <div class="col-sm-1"><p><b>Available</b></p></div>
   </div>
-  <div *ngFor="let p of products | async" appHover appHighlightClick class="row">
+  <div *ngFor="let p of products | async" class="row">
     <div class="col-sm-2"><p>{{p.name}}</p></div>
     <div class="col-sm-2"><p>{{p.description}}</p></div>
     <div class="col-sm-1 text-right"><p>{{p.price.toFixed(2)}}</p></div>

@@ -26,7 +26,6 @@ export class UrlService {
       .subscribe(url => this.navigatedUrl.next(url));
     this.router.events.subscribe(event => console.log(event));
     // this.navigatedUrl.subscribe(url => console.log(this.route));
-    // this.navigatedUrl.subscribe(url => console.log(this.route.firstChild));
     this.navigatedUrl.subscribe(url => console.log(url));
   }
 

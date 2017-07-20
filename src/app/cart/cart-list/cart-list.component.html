@@ -6,11 +6,11 @@
     <div class="col-sm-1 text-right"><p><b>Total</b></p></div>
     <div class="col-sm-1"></div>
   </div>
-  <div *ngFor="let item of items | async" appHover appHighlightClick class="row">
+  <div *ngFor="let item of items | async" class="row">
     <div class="col-sm-1"><p>{{item.name}}</p></div>
     <div class="col-sm-1 text-right"><p>{{item.quantity}}</p></div>
     <div class="col-sm-1 text-right"><p>{{item.totalPrice.toFixed(2)}}</p></div>
-    <div class="col-sm-1" appHighlightClick>
+    <div class="col-sm-1">
       <button (click)="onRefuse(item)" class="btn-xs btn-danger">X</button>
     </div>
   </div>

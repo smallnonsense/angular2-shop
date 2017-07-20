@@ -31,13 +31,7 @@ export class AuthMenuComponent implements OnInit {
     this.isAuthenticated = user.map(u => u.claims.includes(UserClaim.Trusted));
     this.isAdmin = user.map(u => u.claims.includes(UserClaim.Admin));
     this.userName = user.map(u => u.fullName);
-    const returnUrl = this.urlService.url
-      .filter(url => url.fragments.includes('authenticate'))
-      .map(url => ({ returnUrl: url.params.returnUrl }));
-    const currentUrl = this.urlService.url
-      .filter(url => !url.fragments.includes('authenticate'))
-      .map(url => ({ returnUrl: url.url }));
-    this.returnParams = currentUrl.merge(returnUrl);
+    this.returnParams = this.urlService.url.map(url => ({ returnUrl: url.url }));
   }
 
   public refresh() {
