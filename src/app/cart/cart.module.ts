@@ -5,9 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from 'app/common';
 import { AuthenticateGuard } from 'app/auth';
 
-import { CartListComponent, CartDetailComponent } from './';
-import { CartCheckoutComponent } from './cart-checkout/cart-checkout.component';
-import { CartGuard } from './cart.guard';
+import {
+  CartGuard, BasketService, BasketCachingService,
+  CartListComponent, CartDetailComponent, CartCheckoutComponent
+} from './';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
     CModule,
     CommonModule
   ],
-  providers: [CartGuard]
+  providers: [
+    CartGuard,
+    BasketService,
+    BasketCachingService
+  ]
 })
 export class CartModule { }

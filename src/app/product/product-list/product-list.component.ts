@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 
 import { Product, ProductService } from 'app/product';
-
 import { BasketItem, BasketCachingService } from 'app/cart';
 
 @Component({

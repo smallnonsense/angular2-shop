@@ -3,10 +3,10 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 
-import { PageNotFountComponent } from 'app/page-not-fount/page-not-fount.component';
 import { AuthFormComponent } from 'app/auth';
+import { Url } from 'app/common';
 
-import { Url } from './url';
+import { PageNotFountComponent } from 'app/page-not-fount/page-not-fount.component';
 
 @Injectable()
 export class UrlService {
@@ -19,7 +19,6 @@ export class UrlService {
     private router: Router) {
     this.router.events
       .filter(event => event instanceof NavigationEnd)
-      // .filter(event => this.route.firstChild.component !== AuthFormComponent)
       .filter(event => this.route.firstChild.component !== PageNotFountComponent)
       .map((event: NavigationEnd) => event.urlAfterRedirects || event.url || Url.delimiter)
       .map(url => Url.parse(url))

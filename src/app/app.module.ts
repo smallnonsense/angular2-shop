@@ -32,9 +32,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [
-    ProductService,
-    BasketService,
-    BasketCachingService,
     { provide: APP_BASE_HREF, useValue: environment.baseUrl }
   ]
 })

@@ -1,6 +1,7 @@
 import { Component, Optional, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
+
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
@@ -8,7 +9,7 @@ import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/toPromise';
 
 import { InfoService } from 'app/common';
-import { User } from 'app/auth/user';
+import { User } from 'app/auth';
 
 
 @Component({

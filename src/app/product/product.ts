@@ -1,4 +1,4 @@
-import { ProductCategory } from './product-category.enum';
+import { ProductCategory } from './';
 
 export class Product {
   public category: string;

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { StorageService } from 'app/common/storage.service'
+import { StorageService } from 'app/common'
 
-import { Product } from './product';
-import { ProductCategory } from './product-category.enum';
+import { Product, ProductCategory } from './';
 
 @Injectable()
 export class ProductService {

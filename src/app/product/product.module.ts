@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule as CModule } from '@angular/common';
+import { CommonModule as NgCommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CommonModule } from 'app/common/common.module';
+import { CommonModule } from 'app/common';
 
-import { ProductListComponent } from './product-list/product-list.component';
+import { ProductService, ProductListComponent } from './';
 
 const routes: Routes = [
   {
@@ -19,9 +19,10 @@ const routes: Routes = [
   declarations: [ProductListComponent],
   exports: [ProductListComponent, RouterModule],
   imports: [
-    CModule,
+    NgCommonModule,
     CommonModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  providers: [ProductService]
 })
 export class ProductModule { }

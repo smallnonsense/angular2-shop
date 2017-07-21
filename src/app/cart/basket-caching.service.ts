@@ -3,10 +3,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService, User } from 'app/auth';
-import { StorageService } from 'app/common/storage.service'
+import { StorageService } from 'app/common'
 
-import { BasketService } from './basket.service';
-import { BasketItem } from './basket-item';
+import { BasketService, BasketItem } from './';
 
 @Injectable()
 export class BasketCachingService {
