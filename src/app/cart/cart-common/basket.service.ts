@@ -9,10 +9,12 @@ import { BasketItem } from './';
 
 @Injectable()
 export class BasketService {
+  private static count = 0;
 
   public constructor(
     private storage: StorageService,
-    private authService: AuthService) { }
+    private authService: AuthService) {
+    console.warn(`BasketService ${BasketService.count++}`); }
 
   public getItems(): BasketItem[] {
     return this.get(this.storageKey);

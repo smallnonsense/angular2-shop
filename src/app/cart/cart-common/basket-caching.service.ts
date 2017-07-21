@@ -9,6 +9,7 @@ import { BasketService, BasketItem } from './';
 
 @Injectable()
 export class BasketCachingService {
+  private static count = 0;
 
   private baskets: BehaviorSubject<BasketItem[]> = new BehaviorSubject([]);
   private storageKey: string;
@@ -17,6 +18,7 @@ export class BasketCachingService {
     private service: BasketService,
     private authService: AuthService) {
     authService.observableUser.subscribe(() => this.refresh());
+    console.warn(`BasketCachingService ${BasketCachingService.count++}`);
   }
 
   public getItems(): Observable<BasketItem[]> {

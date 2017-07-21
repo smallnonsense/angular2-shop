@@ -10,7 +10,7 @@ import { PageNotFountComponent } from 'app/page-not-fount/page-not-fount.compone
 
 @Injectable()
 export class UrlService {
-
+  private static count = 0;
   private navigatedUrl: BehaviorSubject<Url> = new BehaviorSubject(
     { url: Url.delimiter, fragments: [], params: {} });
 
@@ -23,9 +23,10 @@ export class UrlService {
       .map((event: NavigationEnd) => event.urlAfterRedirects || event.url || Url.delimiter)
       .map(url => Url.parse(url))
       .subscribe(url => this.navigatedUrl.next(url));
-    this.router.events.subscribe(event => console.log(event));
-    // this.navigatedUrl.subscribe(url => console.log(this.route));
     this.navigatedUrl.subscribe(url => console.log(url));
+    // this.router.events.subscribe(event => console.log(event));
+    // this.navigatedUrl.subscribe(url => console.log(this.route));
+    console.warn(`UrlService ${UrlService.count++}`);
   }
 
   public get url(): Observable<Url> {

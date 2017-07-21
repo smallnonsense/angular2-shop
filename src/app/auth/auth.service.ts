@@ -8,11 +8,13 @@ import { User } from './user';
 
 @Injectable()
 export class AuthService {
+  private static count = 0;
 
   private authUser = new BehaviorSubject<User>(this.guest);
 
   constructor(private storage: StorageService) {
     this.restore(storage);
+    console.warn(`AuthService ${AuthService.count++}`);
   }
 
   public get observableUser() {

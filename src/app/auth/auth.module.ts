@@ -20,7 +20,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AuthMenuComponent, AuthFormComponent, UserComponent],
-  exports: [AuthMenuComponent, AuthFormComponent, UserComponent, RouterModule],
+  exports: [AuthMenuComponent, RouterModule],
   imports: [CommonModule, FormsModule, RouterModule.forChild(routes)],
   providers: [AuthService, AuthenticateGuard]
 })

@@ -1,13 +1,14 @@
 import { UserClaim } from 'app/auth/user-claim.enum';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+
 import { Observable } from 'rxjs/Observable';
 
 import { UrlService } from 'app/common';
 
 import { User } from 'app/auth/user';
 import { AuthService } from 'app/auth/auth.service';
-import { AuthFormComponent } from 'app/auth';
+import { AuthFormComponent } from 'app/auth/auth-form/auth-form.component';
 import { PageNotFountComponent } from 'app/page-not-fount/page-not-fount.component';
 
 @Component({

@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 export class StorageService {
 
   private static notSupportedMessage = 'Web Storage doesn\'t supported';
-
+  private static count = 0;
   constructor() {
     if (!localStorage) {
       console.log('StorageService won\'t work properly. ' + StorageService.notSupportedMessage);
     }
+    console.warn(`StorageService ${StorageService.count++}`);
   }
 
   public getItem(key: string) {

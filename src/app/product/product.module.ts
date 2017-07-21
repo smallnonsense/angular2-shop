@@ -8,7 +8,7 @@ import { ProductService, ProductListComponent } from './';
 
 const routes: Routes = [
   {
-    path: 'products',
+    path: '',
     children: [
       { path: '', component: ProductListComponent, pathMatch: 'full' }
     ]
