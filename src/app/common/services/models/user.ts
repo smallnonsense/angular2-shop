@@ -1,4 +1,4 @@
-import { UserClaim } from 'app/auth/user-claim.enum';
+import { UserClaim } from './';
 
 export interface User {
   id: string;

@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule as NgCommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CommonModule } from 'app/common';
-
-import { ProductService, ProductListComponent } from './';
+import { ProductListComponent } from './';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', component: ProductListComponent, pathMatch: 'full' }
+      { path: 'products', component: ProductListComponent, pathMatch: 'full' }
     ]
   }
 ];
@@ -19,10 +17,9 @@ const routes: Routes = [
   declarations: [ProductListComponent],
   exports: [ProductListComponent, RouterModule],
   imports: [
-    NgCommonModule,
     CommonModule,
     RouterModule.forChild(routes)
   ],
-  providers: [ProductService]
+  providers: []
 })
 export class ProductModule { }

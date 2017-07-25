@@ -2,19 +2,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService, User } from 'app/auth';
-import { StorageService } from 'app/common'
-
-import { BasketItem } from './';
+import { StorageService, InstanceManager, AuthService, User, BasketItem } from 'app/common/services';
 
 @Injectable()
 export class BasketService {
-  private static count = 0;
 
   public constructor(
     private storage: StorageService,
     private authService: AuthService) {
-    console.warn(`BasketService ${BasketService.count++}`); }
+    InstanceManager.track();
+  }
 
   public getItems(): BasketItem[] {
     return this.get(this.storageKey);

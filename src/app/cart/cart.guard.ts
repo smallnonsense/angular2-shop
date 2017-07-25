@@ -7,7 +7,7 @@ import {
 
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService, UserClaim } from 'app/auth';
+import { AuthService, UserClaim } from 'app/common/services';
 
 @Injectable()
 export class CartGuard implements CanActivate, CanActivateChild {
@@ -30,3 +30,4 @@ export class CartGuard implements CanActivate, CanActivateChild {
     return this.canActivate(childRoute, state);
   }
 }
+

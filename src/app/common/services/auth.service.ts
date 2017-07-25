@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { StorageService } from 'app/common';
-
-import { UserClaim } from './user-claim.enum';
-import { User } from './user';
+import { StorageService, InstanceManager, User, UserClaim } from './';
 
 @Injectable()
 export class AuthService {
-  private static count = 0;
-
   private authUser = new BehaviorSubject<User>(this.guest);
 
   constructor(private storage: StorageService) {
+    InstanceManager.track();
     this.restore(storage);
-    console.warn(`AuthService ${AuthService.count++}`);
   }
 
   public get observableUser() {

@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService, User } from 'app/auth';
-import { StorageService } from 'app/common'
-
-import { BasketService, BasketItem } from './';
+import {
+  InstanceManager, StorageService, AuthService,
+  BasketService, BasketItem, User
+} from './';
 
 @Injectable()
 export class BasketCachingService {
-  private static count = 0;
 
   private baskets: BehaviorSubject<BasketItem[]> = new BehaviorSubject([]);
   private storageKey: string;
@@ -18,7 +17,7 @@ export class BasketCachingService {
     private service: BasketService,
     private authService: AuthService) {
     authService.observableUser.subscribe(() => this.refresh());
-    console.warn(`BasketCachingService ${BasketCachingService.count++}`);
+    InstanceManager.track();
   }
 
   public getItems(): Observable<BasketItem[]> {

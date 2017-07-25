@@ -4,10 +4,10 @@ import {
   ActivatedRouteSnapshot, RouterStateSnapshot,
   CanActivate, CanActivateChild
 } from '@angular/router';
+
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from './auth.service';
-import { UserClaim } from './user-claim.enum';
+import { AuthService, UserClaim } from 'app/common/services';
 
 @Injectable()
 export class AuthenticateGuard implements CanActivate, CanActivateChild {

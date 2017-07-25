@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { StorageService } from 'app/common'
-
-import { Product, ProductCategory } from './';
+import { InstanceManager, StorageService, Product, ProductCategory } from './'
 
 @Injectable()
 export class ProductService {
@@ -14,6 +12,7 @@ export class ProductService {
 
   public constructor(private storage: StorageService) {
     this.restore(storage);
+    InstanceManager.track();
   }
 
   public getAllProducts(): Observable<Product[]> {

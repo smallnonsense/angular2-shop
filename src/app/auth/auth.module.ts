@@ -4,14 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import {
-  AuthMenuComponent, AuthFormComponent, UserComponent,
-  AuthService, AuthenticateGuard
+  AuthMenuComponent, AuthFormComponent,
+  UserComponent, AuthenticateGuard, UnauthorizedComponent
 } from './';
 
 const routes: Routes = [
-  {
-    path: 'authenticate', component: AuthFormComponent
-  },
+  { path: 'authenticate', component: AuthFormComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
   {
     path: 'cabinet', component: UserComponent,
     canActivate: [AuthenticateGuard]
@@ -19,9 +18,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AuthMenuComponent, AuthFormComponent, UserComponent],
+  declarations: [
+    AuthMenuComponent, AuthFormComponent,
+    UnauthorizedComponent, UserComponent],
   exports: [AuthMenuComponent, RouterModule],
   imports: [CommonModule, FormsModule, RouterModule.forChild(routes)],
-  providers: [AuthService, AuthenticateGuard]
+  providers: [AuthenticateGuard]
 })
 export class AuthModule { }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
-import { BasketItem, BasketCachingService } from 'app/cart/cart-common';
+import { BasketItem, BasketCachingService } from 'app/common/services';
 
 @Component({
   selector: 'app-cart-detail',

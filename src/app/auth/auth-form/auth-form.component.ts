@@ -3,9 +3,7 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
 
 import { Observable } from 'rxjs/Rx';
 
-import { UrlService, Url } from 'app/common';
-import { User } from 'app/auth';
-import { AuthService } from 'app/auth/auth.service';
+import { UrlService, AuthService } from 'app/common/services';
 
 @Component({
   selector: 'app-auth-form',
