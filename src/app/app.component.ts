@@ -8,7 +8,8 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/toPromise';
 
-import { InfoService, User } from 'app/common/services';
+import { InfoService } from 'common/services';
+import { User } from 'common/models';
 
 
 @Component({
