@@ -18,8 +18,8 @@ export class BasketCachingService {
   public constructor(
     private service: BasketService,
     private authService: AuthService) {
-    authService.observableUser.subscribe(() => this.refresh());
     InstanceManager.track();
+    authService.observableUser.subscribe(() => this.refresh());
   }
 
   public getItems(): Observable<BasketItem[]> {

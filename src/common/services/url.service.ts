@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, UrlTree } from '@angular/router';
 
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 
@@ -13,7 +13,7 @@ import { PageNotFountComponent } from 'common/components/page-not-fount/page-not
 export class UrlService {
 
   private navigatedUrl: BehaviorSubject<Url> = new BehaviorSubject(
-    { url: Url.delimiter, fragments: [], params: {} });
+    { url: '/', segments: [], params: {} });
 
   constructor(
     private route: ActivatedRoute,
@@ -22,8 +22,9 @@ export class UrlService {
     this.router.events
       .filter(event => event instanceof NavigationEnd)
       .filter(event => this.route.firstChild.component !== PageNotFountComponent)
-      .map((event: NavigationEnd) => event.urlAfterRedirects || event.url || Url.delimiter)
-      .map(url => Url.parse(url))
+      .map((event: NavigationEnd) => event.urlAfterRedirects || event.url || '/')
+      .map(url => this.router.parseUrl(url))
+      .map(tree => Url.from(tree))
       .subscribe(url => this.navigatedUrl.next(url));
     // this.navigatedUrl.subscribe(url => console.log(JSON.stringify(url)));
   }

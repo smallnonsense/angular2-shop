@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { CartListComponent } from './cart-list/cart-list.component';
 import { CartDetailComponent } from './cart-detail/cart-detail.component';
 import { CartCheckoutComponent } from './cart-checkout/cart-checkout.component';
-import { CartGuard } from './cart.guard';
+
 
 const routes: Routes = [
   {
     path: 'cart',
-    canActivate: [CartGuard],
-    canActivateChild: [CartGuard],
+    data: { title: 'Cart' },
     children: [
       {
         path: '', pathMatch: 'full',
@@ -29,6 +28,6 @@ const routes: Routes = [
   declarations: [CartDetailComponent, CartListComponent, CartCheckoutComponent],
   exports: [CartDetailComponent, RouterModule],
   imports: [CommonModule, RouterModule.forChild(routes)],
-  providers: [CartGuard]
+  providers: []
 })
 export class CartModule { }

@@ -1,6 +1,10 @@
 export enum UserClaim {
-  Admin = 1,
-  Cart,
-  Products,
-  Trusted
+  none = 1,
+  admin,
+  cart,
+  checkout,
+  cabinet,
+  users,
+  products,
+  known
 }

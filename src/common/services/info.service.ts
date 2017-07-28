@@ -4,6 +4,6 @@ import { Injectable } from '@angular/core';
 export class InfoService {
 
   public get() {
-    return { app: 'i-Shop', ver: '1.0' };
+    return { app: 'i-Shop', ver: '2.0' };
   }
 }

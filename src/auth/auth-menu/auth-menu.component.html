@@ -1,8 +1,7 @@
 <ul class="nav navbar-nav dropdown">
   <li *ngIf="isAuthenticated | async" routerLinkActive="active" class="nav-item">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        <span *ngIf="isAdmin | async" [style.color]="'red'">[admin]</span>
-        {{userName | async}}
+        <span [style.color]="'red'">{{title | async}}</span>{{userName | async}}
         <span class="caret"></span></a>
     <ul class="dropdown-menu dropdown-menu-right">
       <li class="nav-item"><a routerLink="/cabinet" class="nav-link">Cabinet</a></li>

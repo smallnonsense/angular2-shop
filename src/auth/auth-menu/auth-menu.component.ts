@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { UrlService, AuthService } from 'common/services';
 import { User, UserClaim } from 'common/models';
-import { PageNotFountComponent } from 'common/components';
 
 import { AuthFormComponent } from 'auth/auth-form/auth-form.component';
 
@@ -17,7 +16,7 @@ import { AuthFormComponent } from 'auth/auth-form/auth-form.component';
 export class AuthMenuComponent implements OnInit {
 
   public isAuthenticated: Observable<boolean>;
-  public isAdmin: Observable<boolean>;
+  public title: Observable<string>;
   public userName: Observable<string>;
   public returnParams: Observable<{}>;
 
@@ -27,8 +26,10 @@ export class AuthMenuComponent implements OnInit {
 
   public ngOnInit() {
     const user = this.authService.observableUser;
-    this.isAuthenticated = user.map(u => u.claims.includes(UserClaim.Trusted));
-    this.isAdmin = user.map(u => u.claims.includes(UserClaim.Admin));
+    this.isAuthenticated = user.map(u => u.claims.includes(UserClaim.known));
+    this.title = user
+      .filter(u => u.claims.includes(UserClaim.admin))
+      .map(u => '[admin]');
     this.userName = user.map(u => u.fullName);
     this.returnParams = this.urlService.url.map(url => ({ returnUrl: url.url }));
   }

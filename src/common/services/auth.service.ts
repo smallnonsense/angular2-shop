@@ -22,16 +22,16 @@ export class AuthService {
     return this.authUser.value;
   }
   public get guest(): User {
-    return { id: 'guest', fullName: 'Guest', email: null, claims: [UserClaim.Products, UserClaim.Cart] };
+    return { id: 'guest', fullName: 'Guest', email: null, claims: [UserClaim.products, UserClaim.cart] };
   }
   public logIn(email: string, password: string) {
-    const claims = [UserClaim.Trusted, UserClaim.Products, UserClaim.Cart];
-    const user: User = { id: email, fullName: email, email: email, claims: claims };
+    const claims = [UserClaim.known, UserClaim.products, UserClaim.cart, UserClaim.checkout, UserClaim.cabinet, UserClaim.users];
+    const user: User = { id: this.newId(), fullName: email, email: email, claims: claims };
     this.setUser(user);
   }
   public logInAsAdministrator(email: string, password: string) {
-    const claims = [UserClaim.Trusted, UserClaim.Products, UserClaim.Admin];
-    const user: User = { id: '1', fullName: email, email: email, claims: claims };
+    const claims = [UserClaim.known, UserClaim.products, UserClaim.admin];
+    const user: User = { id: this.newId(), fullName: email, email: email, claims: claims };
     this.setUser(user);
   }
   public refresh() {
@@ -57,5 +57,11 @@ export class AuthService {
   private setUser(user: User) {
     this.storage.setItem('user', JSON.stringify(user))
     this.authUser.next(user || this.guest);
+  }
+  private newId() {
+    const latestId = this.storage.getItem('latestId');
+    const id = (+latestId).toString();
+    this.storage.setItem('latestId', id);
+    return id;
   }
 }

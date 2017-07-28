@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from 'common/services';
-import { UserClaim } from 'common/models';
+import { AuthService, MenuService } from 'common/services';
+import { UserClaim, MenuItems } from 'common/models';
 
 @Component({
   selector: 'app-menu',
@@ -12,17 +12,11 @@ import { UserClaim } from 'common/models';
 })
 export class MenuComponent implements OnInit {
 
-  public showCart: Observable<boolean>;
-  public showProducts: Observable<boolean>;
+  public items: Observable<MenuItems>;
 
-  constructor(private authService: AuthService) { }
+  constructor(private menuService: MenuService) { }
 
   ngOnInit() {
-    const user = this.authService.observableUser;
-    const isAdmin = user.map(u => u.claims.includes(UserClaim.Admin));
-    const hasCart = user.map(u => u.claims.includes(UserClaim.Cart));
-    const hasProducts = user.map(u => u.claims.includes(UserClaim.Products));
-    this.showCart = hasCart;
-    this.showProducts = hasProducts;
+      this.items = this.menuService.items;
   }
 }
