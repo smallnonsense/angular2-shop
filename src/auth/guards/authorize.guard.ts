@@ -8,7 +8,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from 'common/services';
-import { UserClaim, Url } from 'common/models';
+import { UserClaim, UserClaims, Url } from 'common/models';
 
 @Injectable()
 export class AuthorizeGuard implements CanActivate, CanActivateChild {
@@ -21,19 +21,19 @@ export class AuthorizeGuard implements CanActivate, CanActivateChild {
   public canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    const required: UserClaim = Util.getRequiredClaim(next);
-    if (required === UserClaim.none) {
+    const required = Util.getRequiredClaim(next);
+    if (required.includes('none')) {
       return true;
     }
-    const allowed = this.authService.user.claims.includes(required);
+    const claims = this.authService.user.claims;
+    const allowed = claims.every(claim => required.includes(claim));
     if (!allowed) {
-      console.warn(`User requires '${UserClaim[required]}' permission to '${state.url}'`);
+      console.warn(`User requires '${required}' permissions to '${state.url}'`);
       if (state.url.includes('unauthorized')) {
         console.error('Routing error: Unauthorized route configuration causes closed loop.');
         return false;
       }
-      this.router.navigate(
-        ['unauthorized'], { queryParams: { returnUrl: state.url } });
+      this.router.navigate(['unauthorized'], { queryParams: { returnUrl: state.url } });
     };
     return allowed;
   }
@@ -44,10 +44,16 @@ export class AuthorizeGuard implements CanActivate, CanActivateChild {
 }
 
 class Util {
-  public static getRequiredClaim(next: ActivatedRouteSnapshot) {
-    return next.data.required
-      || UserClaim[next.routeConfig.path]
-      || UserClaim.none;
+  public static getRequiredClaim(next: ActivatedRouteSnapshot): UserClaims {
+    if (next.data.required) {
+      if (next.data.required instanceof Array) {
+        return next.data.required;
+      }
+      return [next.data.required];
+    }
+    console.warn('valid claims?', next.url.map(segment => <UserClaim>segment.path));
+    return next.url
+    .filter(segment => segment.parameterMap.keys.length === 0)
+    .map(segment => <UserClaim>segment.path);
   }
 }
-

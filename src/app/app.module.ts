@@ -1,26 +1,37 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
-import { Router, Routes, Route, RouterModule } from '@angular/router';
+import { Routes, Route, RouterModule, RouteReuseStrategy } from '@angular/router';
 
-import { AuthModule, AuthorizeGuard } from 'auth';
+import { AuthModule } from 'auth';
 import { ProductModule } from 'product';
 import { CartModule } from 'cart';
-import { ServicesModule } from 'common/services';
-import { UserClaim } from 'common/models';
-import { ComponentsModule, HomeComponent, PageNotFountComponent } from 'common/components';
+import { ServicesModule, RouteService } from 'common/services';
+import {
+  ComponentsModule, HomeComponent,
+  UnreachableComponent, DoActionComponent
+} from 'common/components';
 import { environment } from 'environments';
 
 import { AppComponent } from './app.component';
+import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy';
 
 const routes: Routes = [
   {
     path: '', component: HomeComponent, pathMatch: 'full',
-    data: { required: UserClaim.none }
+    data: { required: 'none' }
   },
   {
-    path: '**', component: PageNotFountComponent,
-    data: { required: UserClaim.none }
+    path: 'unreachable', component: UnreachableComponent,
+    data: { required: 'none' }
+  },
+  {
+    path: 'do/:action', component: DoActionComponent,
+    data: { required: 'none' }
+  },
+  {
+    path: '**', redirectTo: 'do/undefined',
+    data: { required: 'none' }
   }
 ];
 
@@ -34,44 +45,21 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { enableTracing: environment.enableTracing })
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: environment.baseUrl }
+    { provide: APP_BASE_HREF, useValue: environment.baseUrl },
+    // { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }
   ]
 })
 export class AppModule {
 
-  constructor(private router: Router) {
+  constructor(
+    private routeService: RouteService) {
     console.log(`Base URL: ${environment.baseUrl}`);
     if (!environment.production) {
       // log debug information
     }
-
-    this.applyGuards(router);
-  }
-
-  private applyGuards(router: Router) {
-    const config = router.config;
-    const children = this.getChildRoute(config)
-      .filter(route => !route.path.includes(':'));
-      // .filter(route => !routes.includes(route));
-    config.forEach(route => {
-      if (!route.canActivate) {
-        route.canActivate = [];
-      }
-      if (!route.canActivateChild) {
-        route.canActivateChild = [];
-      }
-      route.canActivate.push(AuthorizeGuard);
-      route.canActivateChild.push(AuthorizeGuard);
-    });
-    this.router.resetConfig(config);
-  }
-  private getChildRoute(children: Routes): Routes {
-    if (!children || children.length === 0) {
-      return [];
-    }
-    return children
-      .map(child => this.getChildRoute(child.children))
-      .reduce((accum, child) => accum.concat(child), []);
+    // replaced with dynamic routes
+    // routeService.applyGuards([AuthorizeGuard]);
+    routeService.resetOnAuthorize();
   }
 }
 

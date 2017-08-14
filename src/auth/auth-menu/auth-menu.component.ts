@@ -4,7 +4,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { UrlService, AuthService } from 'common/services';
-import { User, UserClaim } from 'common/models';
+import { User } from 'common/models';
 
 import { AuthFormComponent } from 'auth/auth-form/auth-form.component';
 
@@ -15,9 +15,7 @@ import { AuthFormComponent } from 'auth/auth-form/auth-form.component';
 })
 export class AuthMenuComponent implements OnInit {
 
-  public isAuthenticated: Observable<boolean>;
-  public title: Observable<string>;
-  public userName: Observable<string>;
+  public isGuest: Observable<boolean>;
   public returnParams: Observable<{}>;
 
   constructor(
@@ -25,19 +23,9 @@ export class AuthMenuComponent implements OnInit {
     private authService: AuthService) { }
 
   public ngOnInit() {
-    const user = this.authService.observableUser;
-    this.isAuthenticated = user.map(u => u.claims.includes(UserClaim.known));
-    this.title = user
-      .filter(u => u.claims.includes(UserClaim.admin))
-      .map(u => '[admin]');
-    this.userName = user.map(u => u.fullName);
-    this.returnParams = this.urlService.url.map(url => ({ returnUrl: url.url }));
-  }
-
-  public refresh() {
-    this.authService.refresh();
-  }
-  public logOff() {
-    this.authService.logOff();
+    this.isGuest = this.authService.observableUser
+    .map(u => !u.claims.includes('known'));
+    this.returnParams = this.urlService.url
+      .map(url => ({ returnUrl: url.url }));
   }
 }

@@ -13,6 +13,7 @@ export class UnauthorizedComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.returnUrl = decodeURIComponent(this.route.snapshot.queryParams.returnUrl);
+    this.returnUrl = decodeURIComponent(
+      this.route.snapshot.queryParamMap.get('returnUrl'));
   }
 }

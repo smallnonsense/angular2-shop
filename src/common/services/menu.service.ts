@@ -4,42 +4,29 @@ import { Router, Route } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 
 import { InstanceManager } from 'common/annotations';
-import { MenuItem, MenuItems } from 'common/models';
+import { User, MenuItem, MenuItems } from 'common/models';
+
+import { AuthService } from 'common/services/auth.service';
 
 @Injectable()
 export class MenuService {
 
-  private itemsSubject = new BehaviorSubject<MenuItems>([]);
+  public items: Observable<MenuItems>;
 
-  public get items(): Observable<MenuItems> {
-    return this.itemsSubject.asObservable();
-  }
-
-  public constructor(private router: Router) {
+  public constructor(
+    private router: Router,
+    private authService: AuthService) {
     InstanceManager.track();
-    const items: MenuItems = this.router.config
+    this.items = authService.observableUser.map(user => this.buildFor(user));
+  }
+  private buildFor(user: User): MenuItems {
+    return this.router.config
       .filter(route => route.path && route.data && route.data.title)
       .filter(route => true/* todo: allowed? */)
       .map(route => ({
         title: route.data.title as string,
         link: `/${route.path}`
       }));
-    // Observable.of([
-    //   { title: 'Products', link: '/products' },
-    //   { title: 'Cart', link: '/cart' }
-    // ]);
-    this.itemsSubject.next(items);
   }
 }
 
-class Util {
-  public static title(route: Route) {
-    if (route.data && route.data.title) {
-      return route.data.title;
-    }
-    return route.path;
-  }
-  public static link(route: Route) {
-    return `/${route.path}`;
-  }
-}

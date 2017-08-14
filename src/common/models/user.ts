@@ -1,8 +1,8 @@
-import { UserClaim } from './user-claim.enum';
+import { UserClaims } from './user-claim';
 
 export interface User {
   id: string;
   fullName: string;
   email: string;
-  claims: UserClaim[];
+  claims: UserClaims;
 }

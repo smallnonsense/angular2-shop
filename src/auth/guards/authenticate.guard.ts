@@ -7,20 +7,20 @@ import {
 
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from 'common/services';
-import { UserClaim } from 'common/models';
+import { AuthService, UrlService } from 'common/services';
 
 @Injectable()
 export class AuthenticateGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private authService: AuthService,
+    private urlService: UrlService,
     private router: Router) { }
 
   public canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    const isAthenticated = this.authService.user.claims.includes(UserClaim.known)
+    const isAthenticated = this.authService.user.claims.includes('known')
     if (!isAthenticated) {
       this.router.navigate(['authenticate'], { queryParams: { returnUrl: state.url } });
     };

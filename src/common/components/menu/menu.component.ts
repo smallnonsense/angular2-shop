@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService, MenuService } from 'common/services';
-import { UserClaim, MenuItems } from 'common/models';
+import { MenuItems } from 'common/models';
 
 @Component({
   selector: 'app-menu',

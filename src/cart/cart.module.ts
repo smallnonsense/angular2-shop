@@ -9,18 +9,11 @@ import { CartCheckoutComponent } from './cart-checkout/cart-checkout.component';
 
 const routes: Routes = [
   {
-    path: 'cart',
-    data: { title: 'Cart' },
-    children: [
-      {
-        path: '', pathMatch: 'full',
-        component: CartListComponent
-      },
-      {
-        path: 'checkout',
-        component: CartCheckoutComponent
-      }
-    ]
+    path: 'cart', component: CartListComponent, pathMatch: 'full',
+    data: { title: 'Cart' }
+  },
+  {
+    path: 'cart/checkout', component: CartCheckoutComponent
   }
 ];
 

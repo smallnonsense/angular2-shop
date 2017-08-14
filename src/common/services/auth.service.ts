@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { InstanceManager,  } from 'common/annotations';
-import { User, UserClaim } from 'common/models';
+import { InstanceManager, } from 'common/annotations';
+import { User, UserClaims } from 'common/models';
 
 import { StorageService } from './storage.service';
 
@@ -22,15 +22,15 @@ export class AuthService {
     return this.authUser.value;
   }
   public get guest(): User {
-    return { id: 'guest', fullName: 'Guest', email: null, claims: [UserClaim.products, UserClaim.cart] };
+    return { id: 'guest', fullName: 'Guest', email: null, claims: ['products', 'cart'] };
   }
   public logIn(email: string, password: string) {
-    const claims = [UserClaim.known, UserClaim.products, UserClaim.cart, UserClaim.checkout, UserClaim.cabinet, UserClaim.users];
+    const claims: UserClaims = ['known', 'products', 'cart', 'checkout', 'cabinet', 'users'];
     const user: User = { id: this.newId(), fullName: email, email: email, claims: claims };
     this.setUser(user);
   }
   public logInAsAdministrator(email: string, password: string) {
-    const claims = [UserClaim.known, UserClaim.products, UserClaim.admin];
+    const claims: UserClaims = ['known', 'products', 'admin'];
     const user: User = { id: this.newId(), fullName: email, email: email, claims: claims };
     this.setUser(user);
   }
@@ -50,7 +50,7 @@ export class AuthService {
       id: object.id,
       fullName: object.fullName,
       email: object.email,
-      claims: (object.claims as Array<any>).map(claim => <UserClaim>claim)
+      claims: (object.claims as UserClaims)
     };
     this.authUser.next(user);
   }
@@ -60,7 +60,7 @@ export class AuthService {
   }
   private newId() {
     const latestId = this.storage.getItem('latestId');
-    const id = (+latestId).toString();
+    const id = (+latestId + 1).toString();
     this.storage.setItem('latestId', id);
     return id;
   }

@@ -1,4 +1,4 @@
-import { UrlTree, UrlSegmentGroup } from '@angular/router';
+import { UrlTree, UrlSegment, UrlSegmentGroup } from '@angular/router';
 
 export class Url {
 
@@ -6,13 +6,21 @@ export class Url {
   public segments: string[];
   public params: { [name: string]: string };
 
-  public static from = (urlTree) => UrlHelper.from(urlTree);
-  public static parse = (urlString) => UrlHelper.parse(urlString);
+  public static parse(urlString: string) { return UrlHelper.parse(urlString); }
+  public static parseTree(urlTree: UrlTree) { return UrlHelper.parseTree(urlTree); }
+  public static parseSegments(urlSegments: UrlSegment[]) { return UrlHelper.parseSegments(urlSegments); }
 }
 
 class UrlHelper {
 
-  public static from(urlTree: UrlTree): Url {
+  public static parseSegments(urlSegments: UrlSegment[]): Url {
+    const url = '';
+    const segments = urlSegments.map(segment => segment.path);
+    const params = urlSegments[0].parameters;
+    return { url, segments, params };
+  }
+
+  public static parseTree(urlTree: UrlTree): Url {
     const url = urlTree.toString();
     const outlet = urlTree.root.children.primary || new UrlSegmentGroup([], {});
     const segments = outlet.segments.map(segment => segment.path);
