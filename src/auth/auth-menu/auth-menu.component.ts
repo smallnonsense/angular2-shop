@@ -3,8 +3,8 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 
-import { UrlService, AuthService } from 'common/services';
-import { User } from 'common/models';
+import { UrlService, AuthService, MenuService } from 'common/services';
+import { User, MenuItem } from 'common/models';
 
 import { AuthFormComponent } from 'auth/auth-form/auth-form.component';
 
@@ -15,17 +15,24 @@ import { AuthFormComponent } from 'auth/auth-form/auth-form.component';
 })
 export class AuthMenuComponent implements OnInit {
 
-  public isGuest: Observable<boolean>;
-  public returnParams: Observable<{}>;
+  public menuItem: MenuItem;
+  public isAuthenticated: boolean;
+  public returnParams: any;
 
   constructor(
     private urlService: UrlService,
+    private menuService: MenuService,
     private authService: AuthService) { }
 
   public ngOnInit() {
-    this.isGuest = this.authService.observableUser
-    .map(u => !u.claims.includes('known'));
-    this.returnParams = this.urlService.url
-      .map(url => ({ returnUrl: url.url }));
+    this.authService.observableUser.subscribe(u =>
+      this.isAuthenticated = u.claims.includes('known')
+    );
+    this.menuService.authenticate.subscribe(item =>
+      this.menuItem = item
+    );
+    this.urlService.url.subscribe(url =>
+      this.returnParams = { returnUrl: url.url }
+    );
   }
 }

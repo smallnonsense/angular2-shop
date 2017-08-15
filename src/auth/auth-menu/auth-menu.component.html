@@ -1,6 +1,6 @@
 <ul class="nav navbar-nav dropdown">
-  <li *ngIf="isGuest | async" routerLinkActive="disabled" class="nav-item">
-    <a routerLink="/do/login" [queryParams]="returnParams | async" class="nav-link">
-    <span class="glyphicon glyphicon-log-in" class="nav-link"></span> Log In</a>
+  <li *ngIf="!isAuthenticated" routerLinkActive="disabled" [ngClass]="{'disabled': menuItem.link === null}" class="nav-item">
+    <a [routerLink]="menuItem.link" [queryParams]="returnParams" class="nav-link">
+    <span class="glyphicon glyphicon-log-in" class="nav-link"></span>{{menuItem.title}}</a>
   </li>
 </ul>

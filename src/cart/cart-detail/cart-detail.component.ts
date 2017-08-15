@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
-import { BasketCachingService } from 'common/services';
-import { BasketItem } from 'common/models';
+import { BasketCachingService, MenuService } from 'common/services';
+import { BasketItem, MenuItem } from 'common/models';
 
 @Component({
   selector: 'app-cart-detail',
@@ -11,17 +11,23 @@ import { BasketItem } from 'common/models';
 })
 export class CartDetailComponent implements OnInit {
 
-  public itemsCount: Observable<number>;
-  public totalAmount: Observable<number>;
+  public menuItem: MenuItem;
+  public itemsCount: number;
+  public totalAmount: number;
 
-  public constructor(private service: BasketCachingService) { }
+  public constructor(
+    private basketService: BasketCachingService,
+    private menuService: MenuService
+  ) { }
 
   public ngOnInit() {
-    const basketItems: Observable<BasketItem[]> = this.service.getItems();
-    this.itemsCount = basketItems.map(items =>
-      items.map(item => item.quantity).reduce(this.sum, 0));
-    this.totalAmount = basketItems.map(items =>
-      items.map(item => item.totalPrice).reduce(this.sum, 0));
+    this.menuService.checkout.subscribe(item => {
+      this.menuItem = item;
+    });
+    this.basketService.getItems().subscribe(items => {
+      this.itemsCount = items.map(item => item.quantity).reduce(this.sum, 0);
+      this.totalAmount = items.map(item => item.totalPrice).reduce(this.sum, 0);
+    });
   }
 
   private sum(total: number, amount: number): number {

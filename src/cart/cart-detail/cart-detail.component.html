@@ -1,9 +1,8 @@
-<div>
-  <div *ngIf="(itemsCount | async) !== 0">
-    <p class="text-center">Cart contains <b>{{itemsCount | async}}</b> item(s) for <b>${{totalAmount | async}}</b></p>
-    <a routerLink="/cart/checkout" routerLinkActive="disabled" class="btn btn-default">Checkout</a>
-  </div>
-  <div *ngIf="(itemsCount | async) === 0">
-    <p>Cart is empty</p>
+<div *ngIf="itemsCount !== 0" class="panel panel-default">
+  <div class="panel-body">
+    <p>Cart contains <b>{{itemsCount}}</b> item(s) for <b>${{totalAmount}}</b></p>
+    <div class="text-center">
+      <a [routerLink]="menuItem.link" routerLinkActive="disabled" [ngClass]="{'disabled': menuItem.link === null}" class="btn btn-default">{{menuItem.title}}</a>
+    </div>
   </div>
 </div>
