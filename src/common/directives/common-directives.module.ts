@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HighlightClickDirective, HoverDirective } from './';
 
 @NgModule({
-  declarations: [],
+  declarations: [HighlightClickDirective, HoverDirective],
   exports: [HighlightClickDirective, HoverDirective],
   imports: [],
   providers: []
