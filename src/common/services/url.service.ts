@@ -21,11 +21,6 @@ export class UrlService {
     private route: ActivatedRoute,
     private router: Router) {
     InstanceManager.track();
-    // todo: remove
-    router.events
-      .subscribe(url => {
-        console.log(url);
-      });
     router.events
       .filter(event => event instanceof NavigationStart)
       .map((event: NavigationStart) => this.router.parseUrl(event.url || '/'))
@@ -36,9 +31,15 @@ export class UrlService {
       .map((event: NavigationEnd) => event.urlAfterRedirects || event.url || '/')
       .map(url => this.router.parseUrl(url))
       .map(tree => Url.parseTree(tree))
-      .subscribe(url => this.navigatedSubject.next(url));
-    this.url.subscribe(url => this.navigatedUrl = url);
-    //  this.url.subscribe(url => console.log(JSON.stringify(url)));
+      .subscribe(url => {
+        // todo: build navigatedUrl from ActivatedRoute (no string parsing)
+        url.params = Object.assign(url.params, route.snapshot.params);
+        route.snapshot.children.forEach(child => {
+          url.params = Object.assign(url.params, child.params);
+        });
+        this.navigatedUrl = url;
+        this.navigatedSubject.next(url);
+      });
   }
 
   public get url(): Observable<Url> {

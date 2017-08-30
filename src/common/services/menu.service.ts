@@ -6,20 +6,18 @@ import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { InstanceManager } from 'common/annotations';
 import { User, MenuItem, MenuItems } from 'common/models';
 
-import { AuthService } from 'common/services/auth.service';
+import { RouteService } from 'common/services/route.service';
 
 @Injectable()
 export class MenuService {
 
-  public constructor(
-    private router: Router,
-    private authService: AuthService) {
+  public constructor(private routeService: RouteService) {
     InstanceManager.track();
   }
 
   public get items(): Observable<MenuItems> {
-    return this.authService.observableUser.map(() =>
-      this.router.config
+    return this.routeService.reachableRoutes.map(routes =>
+      routes
         .filter(route => route.path && route.data && route.data.title)
         .map(route => ({
           title: route.data.title as string,
@@ -29,8 +27,8 @@ export class MenuService {
     );
   }
   public get checkout(): Observable<MenuItem> {
-    return this.authService.observableUser.map(user => {
-      const checkout = this.router.config.find(route => route.path === 'cart/checkout');
+    return this.routeService.reachableRoutes.map(routes => {
+      const checkout = routes.find(route => route.path === 'cart/checkout');
       if (!checkout) {
         console.warn('Checkout is disabled or undefined in routes');
         return { title: 'Checkout', link: null };
@@ -39,16 +37,16 @@ export class MenuService {
     });
   }
   public get authenticate(): Observable<MenuItem> {
-    return this.authService.observableUser.map(user => {
-      const authenticate = this.router.config.find(route => route.path === 'authenticate');
+    return this.routeService.reachableRoutes.map(routes => {
+      const authenticate = routes.find(route => route.path === 'authenticate');
       if (!authenticate) {
         console.warn('Authentication is disabled or undefined in routes');
-        return  { title: 'Log In', link: null };
+        return { title: 'Log In', link: null };
       }
-      const doer = this.router.config.find(route => route.path === 'do/:action');
+      const doer = routes.find(route => route.path === 'do/:action');
       if (!doer) {
         console.warn('do/action is disabled or undefined in routes');
-        return  { title: 'Log In', link: null };
+        return { title: 'Log In', link: null };
       }
       return { title: 'Log In', link: `/do/login` };
     });

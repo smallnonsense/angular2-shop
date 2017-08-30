@@ -6,7 +6,7 @@ import { Routes, Route, RouterModule, RouteReuseStrategy } from '@angular/router
 import { AuthModule } from 'auth';
 import { ProductModule } from 'product';
 import { CartModule } from 'cart';
-import { ServicesModule, RouteService } from 'common/services';
+import { ServicesModule } from 'common/services';
 import {
   ComponentsModule, HomeComponent,
   UnreachableComponent, DoActionComponent
@@ -51,15 +51,11 @@ const routes: Routes = [
 })
 export class AppModule {
 
-  constructor(
-    private routeService: RouteService) {
+  constructor() {
     console.log(`Base URL: ${environment.baseUrl}`);
     if (!environment.production) {
       // log debug information
     }
-    // replaced with dynamic routes
-    // routeService.applyGuards([AuthorizeGuard]);
-    routeService.resetOnAuthorize();
   }
 }
 

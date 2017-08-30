@@ -1,45 +1,46 @@
 import { Injectable } from '@angular/core';
 import { Router, Route, Routes, CanActivate, CanActivateChild } from '@angular/router';
 
-import { AuthService } from './auth.service';
+import { Observable } from 'rxjs/Rx';
+
 import { User, UserClaim, UserClaims } from 'common/models';
 import { UnreachableComponent } from 'common/components';
+
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class RouteService {
 
   private routes: Routes;
+  private allowedRoutes: Observable<Routes>;
 
   public constructor(
     private router: Router,
     private authService: AuthService) {
     this.routes = router.config;
-  }
+    this.allowedRoutes = authService.observableUser.map(user =>
+      Util.allowedRoutes(this.routes, user.claims));
 
-  public applyGuards(guards: any[]) {
-    const config = this.router.config;
-    config.forEach(route => {
-      if (!route.canActivate) { route.canActivate = []; }
-      if (!route.canActivateChild) { route.canActivateChild = []; }
-      guards.forEach(guard => {
-        if (guard.canActivate) { route.canActivate.push(guard); }
-        if (guard.canActivateChild) { route.canActivateChild.push(guard); }
-      });
-      this.router.resetConfig(config);
-    });
+    this.allowedRoutes.subscribe(routes => router.resetConfig(routes));
   }
-  public resetOnAuthorize() {
-    this.authService.observableUser.subscribe(user => this.refresh(user));
+  public get supportedRoutes(): Routes {
+    return this.routes;
   }
-
-  private refresh(user: User) {
-    const allowerRoutes = Util.allowedRoutes(this.routes, user.claims);
-    this.router.resetConfig(allowerRoutes);
-    // todo: find suitable way to inform custom reuse strategy without cross-reference
-    // if (this.router.routeReuseStrategy['routes']) {
-    //   this.router.routeReuseStrategy['routes'] = Util.getChildRoute(allowerRoutes);
-    // }
+  public get reachableRoutes(): Observable<Routes> {
+    return this.allowedRoutes;
   }
+  // public applyGuards(guards: any[]) {
+  //   const config = this.routes;
+  //   config.forEach(route => {
+  //     if (!route.canActivate) { route.canActivate = []; }
+  //     if (!route.canActivateChild) { route.canActivateChild = []; }
+  //     guards.forEach(guard => {
+  //       if (guard.canActivate) { route.canActivate.push(guard); }
+  //       if (guard.canActivateChild) { route.canActivateChild.push(guard); }
+  //     });
+  //     this.router.resetConfig(config);
+  //   });
+  // }
 }
 
 
@@ -58,7 +59,7 @@ class Util {
     allowedRoutes.forEach(route => route.children = Util.allowedRoutes(route.children, claims))
     return allowedRoutes;
   }
-  public static isAllowed(route: Route, claims: UserClaims): boolean {
+  private static isAllowed(route: Route, claims: UserClaims): boolean {
     const required = Util.requriedClaims(route);
     return required.includes('none') || required.every(claim => claims.includes(claim));
   }
