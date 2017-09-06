@@ -29,6 +29,6 @@ export class UserMenuComponent implements OnInit {
     this.isAuthenticated = user.map(u => u.claims.includes('known'));
     this.title = user.filter(u => u.claims.includes('admin')).map(u => '[admin]');
     this.userName = user.map(u => u.fullName);
-    this.returnParams = this.urlService.url.map(url => ({ returnUrl: url.url }));
+    this.returnParams = this.urlService.url.navigated.map(url => ({ returnUrl: url.url }));
   }
 }

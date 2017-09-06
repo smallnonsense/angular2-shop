@@ -19,7 +19,7 @@ export class ReloginStrategy implements DoActionStrategy {
 
   public do(): void {
     this.authService.refresh();
-    const url = UrlUtil.ensureUrl(this.urlService.navigatedUrl.params.returnUrl);
+    const url = this.urlService.url.lastSnapshots.system.params.returnUrl;
     this.router.navigateByUrl(url, { replaceUrl: true });
   }
 }

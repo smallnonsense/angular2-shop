@@ -31,8 +31,12 @@ export class AuthMenuComponent implements OnInit {
     this.menuService.authenticate.subscribe(item =>
       this.menuItem = item
     );
-    this.urlService.url.subscribe(url =>
+    this.urlService.url.navigated.subscribe(url =>
       this.returnParams = { returnUrl: url.url }
     );
+  }
+
+  public quickauth() {
+    this.authService.logIn('quick@user', 'no-pwd');
   }
 }

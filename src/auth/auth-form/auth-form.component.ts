@@ -4,6 +4,7 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { UrlService, AuthService } from 'common/services';
+import { Url } from 'common/models';
 
 @Component({
   selector: 'app-auth-form',
@@ -23,11 +24,12 @@ export class AuthFormComponent implements OnInit {
     private authService: AuthService) { }
 
   public ngOnInit() {
-    const returnUrl = this.urlService.paramAsUrl('returnUrl');
+    const returnUrl = this.urlService.url.navigated
+    .map(url => url.params['returnUrl'])
+    .map(url => Url.parse(url));
     this.returnUrl = returnUrl.map(url => url.segments);
     this.returnParams = returnUrl.map(url => url.params);
   }
-
   public authenticate() {
     if (this.asAdministrator) {
       this.authService.logInAsAdministrator(this.login, this.password);

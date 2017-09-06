@@ -23,6 +23,7 @@ export class DoActionFactory {
   }
 
   public create(action: string): DoActionStrategy {
+    console.log('do', action);
     switch (action) {
       case 'relogin':
         return new ReloginStrategy(this.authService, this.urlService, this.router);
