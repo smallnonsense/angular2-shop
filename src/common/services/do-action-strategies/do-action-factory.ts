@@ -28,7 +28,7 @@ export class DoActionFactory {
       case 'relogin':
         return new ReloginStrategy(this.authService, this.urlService, this.router);
       case 'login':
-        return new LoginStrategy(this.router);
+        return new LoginStrategy(this.urlService, this.router);
       case 'logout':
         return new LogoutStrategy(this.authService, this.urlService, this.router);
       case 'undefined':
