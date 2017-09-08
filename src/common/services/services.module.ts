@@ -10,7 +10,7 @@ import { StorageService } from './storage.service';
 import { ProductService } from './product.service';
 import { UrlService } from './url.service';
 import { MenuService } from './menu.service';
-import { DoActionFactory } from './do-action-strategies';
+import { DoActionResolver } from './do-action-strategies';
 
 @NgModule({
   declarations: [],
@@ -18,7 +18,7 @@ import { DoActionFactory } from './do-action-strategies';
   providers: [
     RouteService, StorageService, InfoService, UrlService, ProductService,
     AuthService, BasketService, BasketCachingService, MenuService,
-    DoActionFactory
+    DoActionResolver
   ],
   exports: []
 })

@@ -17,11 +17,12 @@ export class UndefinedStrategy implements DoActionStrategy {
   ) { }
 
   public do(): void {
-    const url = this.urlService.url.lastSnapshots.navigated;
-    if (url.segments.includes('unreachable')) {
-      this.router.navigateByUrl(url.url, { replaceUrl: true });
-      return;
-    }
-    this.router.navigate(['unreachable'], { replaceUrl: true, queryParams: { returnUrl: url.url } });
+    this.urlService.url.navigated.first().subscribe(url => {
+      if (url.segments.includes('unreachable')) {
+        this.router.navigateByUrl(url.url, { replaceUrl: true });
+        return;
+      }
+      this.router.navigate(['unreachable'], { replaceUrl: true, queryParams: { returnUrl: url.url } });
+    });
   }
 }

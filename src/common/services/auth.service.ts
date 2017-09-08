@@ -46,12 +46,7 @@ export class AuthService {
     if (!object) {
       return;
     }
-    const user: User = {
-      id: object.id,
-      fullName: object.fullName,
-      email: object.email,
-      claims: (object.claims as UserClaims)
-    };
+    const user: User = { ...object };
     this.authUser.next(user);
   }
   private setUser(user: User) {

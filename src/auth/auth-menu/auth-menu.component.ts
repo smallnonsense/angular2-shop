@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
-import { Observable } from 'rxjs/Observable';
-
-import { UrlService, AuthService, MenuService } from 'common/services';
 import { User, MenuItem } from 'common/models';
+import { UrlService, AuthService, MenuService } from 'common/services';
 
 import { AuthFormComponent } from 'auth/auth-form/auth-form.component';
 

@@ -28,29 +28,40 @@ export class UrlService {
     //   .subscribe(event => {
     //     console.log(event);
     //   });
-    this.systemUrl.subscribe(url => {
-      route.children.forEach(child => {
-        child.params.subscribe(params => {
-          url.params = Object.assign(url.params, params);
-          this.systemSubject.next(url);
-        });
-      });
-    });
-    this.activityUrl.subscribe(url => {
-      route.children.forEach(child => {
-        child.params.subscribe(params => {
-          url.params = Object.assign(url.params, params);
-          this.navigatedSubject.next(url);
-          console.log(url);
-        });
-      });
-    });
-    this.activityUrl.subscribe(url => {
+    // todo: remove if the approach has failed
+    const sys = this.systemUrl.mergeMap(sysUrl =>
+      route.children.reduce((merged, child) =>
+        merged.mergeMap(url =>
+          child.params.map(params =>
+            Url.of(url.url, url.segments, { ...url.params, ...params })
+          )
+        ), Observable.of(sysUrl))
+    );
+    sys.subscribe(url => this.systemSubject.next(url));
+    // todo: revert if approach above has failed
+    // this.systemUrl.subscribe(url => {
+    //   route.children.forEach(child => {
+    //     child.params.subscribe(params => {
+    //       url.params = Object.assign(url.params, params);
+    //       this.systemSubject.next(url);
+    //     });
+    //   });
+    // });
+    this.userUrl.subscribe(url => {
       route.children.forEach(child => {
         child.params.subscribe(params => {
           url.params = Object.assign(url.params, params);
           this.requestedSubject.next(url);
-          console.log(url);
+          console.log('requested', JSON.stringify(url));
+        });
+      });
+    });
+    this.userUrl.subscribe(url => {
+      route.children.forEach(child => {
+        child.params.subscribe(params => {
+          url.params = Object.assign(url.params, params);
+          this.navigatedSubject.next(url);
+          console.log('navigated', JSON.stringify(url));
         });
       });
     });
@@ -78,7 +89,7 @@ export class UrlService {
       .filter(url => url.segments[0] === 'do');
   }
 
-  private get activityUrl() {
+  private get userUrl() {
     return this.router.events
       .filter(event => event instanceof NavigationEnd)
       .map((event: NavigationEnd) => event.urlAfterRedirects || '/')

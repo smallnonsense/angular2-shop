@@ -1,1 +1,1 @@
-export * from './do-action-factory';
+export * from './do-action-resolver';

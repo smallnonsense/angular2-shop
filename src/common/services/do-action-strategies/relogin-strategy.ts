@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 import { AuthService } from 'common/services/auth.service';
 import { UrlService } from 'common/services/url.service';
 
+import { Url } from 'common/models';
+
 import { DoActionStrategy } from './do-action-strategy';
 import { UrlUtil } from './url-util';
 
@@ -15,11 +17,21 @@ export class ReloginStrategy implements DoActionStrategy {
     private authService: AuthService,
     private urlService: UrlService,
     private router: Router,
-  ) { }
+  ) {
+  }
 
   public do(): void {
-    this.authService.refresh();
-    const url = this.urlService.url.lastSnapshots.system.params.returnUrl;
-    this.router.navigateByUrl(url, { replaceUrl: true });
+    this.urlService.url.system
+    .map(url => url.params.returnUrl)
+    .map(url => this.router.parseUrl(url))
+    .map(url => Url.parseTree(url))
+    .first().subscribe(url => {
+      this.authService.refresh();
+      if (url.segments[0] === 'unreachable') {
+        this.router.navigateByUrl(url.params.returnUrl, { replaceUrl: true });
+        return;
+      }
+      this.router.navigateByUrl(url.url, { replaceUrl: true, queryParams: { returnUrl: url.url } });
+    });
   }
 }

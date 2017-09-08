@@ -16,9 +16,9 @@ export class LogoutStrategy implements DoActionStrategy {
   ) { }
 
   public do(): void {
-    this.authService.logOff();
-    console.log(this.urlService.url.lastSnapshots);
-    const url = this.urlService.url.lastSnapshots.navigated.url;
-    this.router.navigateByUrl(url, { replaceUrl: true });
+    this.urlService.url.navigated.first().subscribe(url => {
+      this.authService.logOff();
+      this.router.navigateByUrl(url.url, { replaceUrl: true });
+    });
   }
 }

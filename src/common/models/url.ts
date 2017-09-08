@@ -8,6 +8,9 @@ export class Url {
 
   public static parse(urlString: string) { return UrlHelper.parse(urlString); }
   public static parseTree(urlTree: UrlTree) { return UrlHelper.parseTree(urlTree); }
+  public static of(url: string, segments: string[], params: { [name: string]: string }): Url {
+    return { url, segments, params };
+  }
 }
 
 class UrlHelper {

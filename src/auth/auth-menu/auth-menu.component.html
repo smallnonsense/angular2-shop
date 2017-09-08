@@ -2,7 +2,7 @@
   <li *ngIf="!isAuthenticated" routerLinkActive="disabled" [ngClass]="{'disabled': menuItem.link === null}" class="nav-item">
     <!-- todo: rollback comment -->
     <!-- <a [routerLink]="menuItem.link" [queryParams]="returnParams" class="nav-link"> -->
-    <a [routerLink]="returnParams.returnUrl" (click)="quickauth()" class="nav-link">
+    <a routerLink="/do/relogin" [queryParams]="returnParams" (click)="quickauth()" class="nav-link">
     <span class="glyphicon glyphicon-log-in" class="nav-link"></span>{{menuItem.title}}</a>
   </li>
 </ul>

@@ -15,12 +15,18 @@ export class LoginStrategy implements DoActionStrategy {
     private router: Router) { }
 
   public do(): void {
-    const returnUrl = this.urlService.url.lastSnapshots.system.params.returnUrl;
-    const url = Url.parseTree(this.router.parseUrl(returnUrl));
-    if (url.segments[0] === 'unreachable') {
-      this.router.navigate(['authenticate'], { replaceUrl: true, queryParams: { returnUrl: url.params.returnUrl } });
-      return;
-    }
-    this.router.navigate(['authenticate'], { replaceUrl: true, queryParams: { returnUrl: returnUrl } });
+    this.urlService.url.system
+    .map(url => url.params.returnUrl)
+    .map(url => this.router.parseUrl(url))
+    .map(url => Url.parseTree(url))
+    .first().subscribe(url => {
+      // todo: pass user/password here in data
+      // todo: move authentication here
+      if (url.segments[0] === 'unreachable') {
+        this.router.navigate(['authenticate'], { replaceUrl: true, queryParams: { returnUrl: url.params.returnUrl } });
+        return;
+      }
+      this.router.navigate(['authenticate'], { replaceUrl: true, queryParams: { returnUrl: url.url } });
+    });
   }
 }

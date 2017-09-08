@@ -11,9 +11,8 @@ import { LogoutStrategy } from './logout-strategy';
 import { UnsupportedStrategy } from './unsupported-strategy';
 import { UndefinedStrategy } from './undefined-strategy';
 
-
 @Injectable()
-export class DoActionFactory {
+export class DoActionResolver {
 
   constructor(
     private authService: AuthService,
@@ -22,7 +21,7 @@ export class DoActionFactory {
     InstanceManager.track();
   }
 
-  public create(action: string): DoActionStrategy {
+  public resolve(action: string): DoActionStrategy {
     console.log('do', action);
     switch (action) {
       case 'relogin':
