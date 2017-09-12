@@ -12,12 +12,9 @@ import { NavigationState } from 'common/models/navigation-state';
 @Injectable()
 export class UrlService {
 
-  private requestedSubject: BehaviorSubject<Url> = new BehaviorSubject(
-    { url: '/', segments: [], params: {} });
-  private navigatedSubject: BehaviorSubject<Url> = new BehaviorSubject(
-    { url: '/', segments: [], params: {} });
-  private systemSubject: BehaviorSubject<Url> = new BehaviorSubject(
-    { url: '/', segments: [], params: {} });
+  private requested = new BehaviorSubject<Url>(Url.empty);
+  private navigated = new BehaviorSubject<Url>(Url.empty);
+  private system = new BehaviorSubject<Url>(Url.empty);
 
   constructor(
     private route: ActivatedRoute,
@@ -28,73 +25,48 @@ export class UrlService {
     //   .subscribe(event => {
     //     console.log(event);
     //   });
-    // todo: remove if the approach has failed
-    const sys = this.systemUrl.mergeMap(sysUrl =>
-      route.children.reduce((merged, child) =>
-        merged.mergeMap(url =>
-          child.params.map(params =>
-            Url.of(url.url, url.segments, { ...url.params, ...params })
-          )
-        ), Observable.of(sysUrl))
-    );
-    sys.subscribe(url => this.systemSubject.next(url));
-    // todo: revert if approach above has failed
-    // this.systemUrl.subscribe(url => {
-    //   route.children.forEach(child => {
-    //     child.params.subscribe(params => {
-    //       url.params = Object.assign(url.params, params);
-    //       this.systemSubject.next(url);
-    //     });
-    //   });
-    // });
-    this.userUrl.subscribe(url => {
-      route.children.forEach(child => {
-        child.params.subscribe(params => {
-          url.params = Object.assign(url.params, params);
-          this.requestedSubject.next(url);
-          console.log('requested', JSON.stringify(url));
-        });
-      });
-    });
-    this.userUrl.subscribe(url => {
-      route.children.forEach(child => {
-        child.params.subscribe(params => {
-          url.params = Object.assign(url.params, params);
-          this.navigatedSubject.next(url);
-          console.log('navigated', JSON.stringify(url));
-        });
-      });
-    });
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .map((event: NavigationEnd) => event.url || '/')
+      .map(url => this.parse(url))
+      .filter(url => url.segments[0] === 'do')
+      .mergeMap(sysUrl => this.enrichWithRoute(sysUrl))
+      .subscribe(url => this.system.next(url));
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .map((event: NavigationEnd) => event.url || '/')
+      .map(url => this.parse(url))
+      .filter(url => url.segments[0] !== 'do')
+      .mergeMap(userUrl => this.enrichWithRoute(userUrl))
+      .subscribe(url => this.requested.next(url));
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .map((event: NavigationEnd) => event.urlAfterRedirects || '/')
+      .map(url => this.parse(url))
+      .filter(url => url.segments[0] !== 'do')
+      .mergeMap(userUrl => this.enrichWithRoute(userUrl))
+      .subscribe(url => this.navigated.next(url));
   }
 
   public get url(): NavigationState {
     return {
-      requested: this.requestedSubject.asObservable(),
-      navigated: this.navigatedSubject.asObservable(),
-      system: this.systemSubject.asObservable(),
-      lastSnapshots: {
-        requested: this.requestedSubject.value,
-        navigated: this.navigatedSubject.value,
-        system: this.systemSubject.value
-      }
+      requested: this.requested.asObservable(),
+      navigated: this.navigated.asObservable(),
+      system: this.system.asObservable()
     };
   }
 
-  private get systemUrl() {
-    return this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .map((event: NavigationEnd) => event.url || '/')
-      .map(url => this.router.parseUrl(url))
-      .map(tree => Url.parseTree(tree))
-      .filter(url => url.segments[0] === 'do');
+  private parse(url: string): Url {
+    const tree = this.router.parseUrl(url);
+    return Url.parseTree(tree);
   }
-
-  private get userUrl() {
-    return this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .map((event: NavigationEnd) => event.urlAfterRedirects || '/')
-      .map(url => this.router.parseUrl(url))
-      .map(tree => Url.parseTree(tree))
-      .filter(url => url.segments[0] !== 'do');
+  private enrichWithRoute(result: Url): Observable<Url> {
+    return this.route.children.reduce((merged, child) =>
+      merged.mergeMap(url =>
+        child.params.map(params =>
+          Url.of(url.url, url.segments, { ...url.params, ...params })
+        )
+      ), Observable.of(result)
+    );
   }
 }

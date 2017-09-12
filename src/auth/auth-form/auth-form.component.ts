@@ -25,7 +25,8 @@ export class AuthFormComponent implements OnInit {
 
   public ngOnInit() {
     const returnUrl = this.urlService.url.navigated
-    .map(url => url.params['returnUrl'])
+    .map(url => url.params.returnUrl)
+    // todo: move pasrsing to urlService
     .map(url => Url.parse(url));
     this.returnUrl = returnUrl.map(url => url.segments);
     this.returnParams = returnUrl.map(url => url.params);

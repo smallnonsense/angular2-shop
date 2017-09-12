@@ -6,6 +6,7 @@ export class Url {
   public segments: string[];
   public params: { [name: string]: string };
 
+  public static get empty(): Url { return UrlHelper.parse(UrlHelper.delimiter); }
   public static parse(urlString: string) { return UrlHelper.parse(urlString); }
   public static parseTree(urlTree: UrlTree) { return UrlHelper.parseTree(urlTree); }
   public static of(url: string, segments: string[], params: { [name: string]: string }): Url {
@@ -41,7 +42,7 @@ class UrlHelper {
     return { url, segments, params };
   }
 
-  private static get delimiter() { return '/'; }
+  public static get delimiter() { return '/'; }
 
   private static splitOne(text: string, symbol: string): string[] {
     const symbolStartsAt = text.indexOf(symbol);

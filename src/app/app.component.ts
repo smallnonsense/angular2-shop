@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/merge';
-import 'rxjs/add/operator/toPromise';
 
 import { InfoService } from 'common/services';
 import { User } from 'common/models';
