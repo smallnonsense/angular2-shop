@@ -19,9 +19,11 @@ export class UndefinedStrategy implements DoActionStrategy {
   public do(): void {
     this.urlService.url.navigated.first().subscribe(url => {
       if (url.segments.includes('unreachable')) {
+        // todo: move navigation into separate service
         this.router.navigateByUrl(url.url, { replaceUrl: true });
         return;
       }
+      // todo: move navigation into separate service
       this.router.navigate(['unreachable'], { replaceUrl: true, queryParams: { returnUrl: url.url } });
     });
   }

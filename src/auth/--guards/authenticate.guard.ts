@@ -22,6 +22,7 @@ export class AuthenticateGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): boolean {
     const isAthenticated = this.authService.user.claims.includes('known')
     if (!isAthenticated) {
+      // todo: move navigation into separate service
       this.router.navigate(['authenticate'], { queryParams: { returnUrl: state.url } });
     };
     return isAthenticated;

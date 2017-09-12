@@ -33,6 +33,7 @@ export class AuthorizeGuard implements CanActivate, CanActivateChild {
         console.error('Routing error: Unauthorized route configuration causes closed loop.');
         return false;
       }
+      // todo: move navigation into separate service
       this.router.navigate(['unauthorized'], { queryParams: { returnUrl: state.url } });
     };
     return allowed;
